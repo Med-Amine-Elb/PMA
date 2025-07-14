@@ -1,30 +1,29 @@
-# TelephoneManager Backend
+# 📞 TelephoneManager Backend
 
-A Spring Boot application for managing corporate phone and SIM card assignments.
+[![Java](https://img.shields.io/badge/Java-17%2B-blue.svg)](https://www.oracle.com/java/)
+[![Maven](https://img.shields.io/badge/Maven-3.6%2B-brightgreen.svg)](https://maven.apache.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A robust Spring Boot backend for managing corporate phone and SIM card assignments, user roles, and inventory. Designed for IT departments and asset managers to streamline device and SIM allocation, tracking, and reporting.
+
+---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-
 - Java 17 or higher
 - Maven 3.6+
 - SQL Server 2019 or higher
 - Postman (for API testing)
 
 ### Database Setup
-
-1. **Install SQL Server** (if not already installed)
-   - Download from: https://www.microsoft.com/en-us/sql-server/sql-server-downloads
-   - Install with default settings
-
+1. **Install SQL Server** ([Download](https://www.microsoft.com/en-us/sql-server/sql-server-downloads))
 2. **Create Database**
    ```sql
    CREATE DATABASE TelephoneManager;
    ```
-
-3. **Update Configuration**
-   - Edit `src/main/resources/application.yml`
-   - Update database connection details:
+3. **Configure Connection**
+   - Edit `src/main/resources/application.yml`:
      ```yaml
      spring:
        datasource:
@@ -33,164 +32,93 @@ A Spring Boot application for managing corporate phone and SIM card assignments.
          password: YourStrong@Passw0rd
      ```
 
-### Running the Application
+### Build & Run
+```bash
+mvn clean install
+mvn spring-boot:run
+```
+- App runs at: [http://localhost:8080](http://localhost:8080)
+- Swagger UI: [http://localhost:8080/api/swagger-ui.html](http://localhost:8080/api/swagger-ui.html)
 
-1. **Clone and Navigate**
-   ```bash
-   cd telephone-manager-backend
-   ```
+---
 
-2. **Build the Project**
-   ```bash
-   mvn clean install
-   ```
-
-3. **Run the Application**
-   ```bash
-   mvn spring-boot:run
-   ```
-
-4. **Verify Startup**
-   - Application will start on `http://localhost:8080`
-   - Swagger UI available at: `http://localhost:8080/api/swagger-ui.html`
-   - API Documentation at: `http://localhost:8080/api/api-docs`
-
-## 🧪 Testing with Postman
-
-### Import Collection
-
-1. Open Postman
-2. Import the collection: `postman/TelephoneManager_API.postman_collection.json`
-3. Create an environment with variables:
-   - `baseUrl`: `http://localhost:8080/api`
-   - `authToken`: (will be set automatically after login)
+## 🧪 API Testing with Postman
+- Import: `postman/TelephoneManager_API.postman_collection.json`
+- Set environment variables:
+  - `baseUrl`: `http://localhost:8080/api`
+  - `authToken`: (auto-set after login)
 
 ### Test Users
+| Email                | Password   | Role     |
+|----------------------|------------|----------|
+| admin@company.com    | admin123   | ADMIN    |
+| assigner@company.com | assigner123| ASSIGNER |
+| john@company.com     | user123    | USER     |
 
-The application creates test users automatically:
+---
 
-| Email | Password | Role |
-|-------|----------|------|
-| admin@company.com | admin123 | ADMIN |
-| assigner@company.com | assigner123 | ASSIGNER |
-| john@company.com | user123 | USER |
+## 📋 Features
+- **Authentication**: JWT, role-based (ADMIN, ASSIGNER, USER)
+- **User Management**: CRUD, search, filtering
+- **Phone Management**: Inventory, status, usage
+- **SIM Card Management**: Inventory, carrier, assignment
+- **Audit Logging**: Track changes and assignments
+- **API Documentation**: Swagger/OpenAPI
 
-### Testing Steps
-
-1. **Login Test**
-   - Use the "Login" request in the Authentication folder
-   - Try with different user credentials
-   - Verify the token is saved automatically
-
-2. **Get Current User**
-   - Use the "Get Current User" request
-   - Should return user information based on the token
-
-3. **Logout Test**
-   - Use the "Logout" request
-   - Verify successful logout
-
-## 📋 Current Implementation
-
-### ✅ Completed Features
-
-- **Authentication System**
-  - JWT-based authentication
-  - Role-based access control (ADMIN, ASSIGNER, USER)
-  - Login/Logout endpoints
-  - Get current user information
-
-### 🔄 Next Steps
-
-1. **User Management** (Phase 2)
-   - CRUD operations for users
-   - Role-based access control
-   - User search and filtering
-
-2. **Phone Management** (Phase 3)
-   - Phone inventory management
-   - Status tracking
-   - Usage statistics
-
-3. **SIM Card Management** (Phase 4)
-   - SIM card inventory
-   - Carrier management
-   - Assignment tracking
+---
 
 ## 🏗️ Project Structure
-
-```
+```text
 src/main/java/com/telephonemanager/
-├── config/                 # Configuration classes
-├── controller/            # REST controllers
-├── dto/                   # Data Transfer Objects
-├── entity/                # JPA entities
-├── repository/            # Data access layer
-├── security/              # Security configuration
-└── service/               # Business logic
+├── config/         # Configuration classes
+├── controller/     # REST controllers
+├── dto/            # Data Transfer Objects
+├── entity/         # JPA entities
+├── repository/     # Data access layer
+├── security/       # Security config
+└── service/        # Business logic
 
 src/main/resources/
-├── application.yml        # Application configuration
-└── data.sql              # Initial data (if needed)
+├── application.yml # App config
+└── data.sql        # Initial data (optional)
 
 postman/
 └── TelephoneManager_API.postman_collection.json
 ```
 
+---
+
 ## 🔧 Configuration
+- **JWT**: Set secret and expiration in `application.yml`
+- **Database**: Configure connection string and credentials
 
-### JWT Configuration
-```yaml
-jwt:
-  secret: your-256-bit-secret-key-here-make-it-very-long-and-secure
-  expiration: 86400000 # 24 hours
-```
-
-### Database Configuration
-```yaml
-spring:
-  datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=TelephoneManager
-    username: sa
-    password: YourStrong@Passw0rd
-```
+---
 
 ## 🐛 Troubleshooting
+- **DB Connection**: Check SQL Server status and config
+- **JWT Issues**: Verify secret and token format
+- **Port Conflicts**: Change port in `application.yml` or free port 8080
+- **Logs**: See `logs/application.log` for details
 
-### Common Issues
+---
 
-1. **Database Connection Error**
-   - Verify SQL Server is running
-   - Check connection string in `application.yml`
-   - Ensure database exists
+## 📚 API Docs
+- [Swagger UI](http://localhost:8080/api/swagger-ui.html)
+- [OpenAPI Spec](http://localhost:8080/api/api-docs)
 
-2. **JWT Token Issues**
-   - Check JWT secret in configuration
-   - Verify token format in Authorization header
-
-3. **Port Already in Use**
-   - Change port in `application.yml`
-   - Or kill process using port 8080
-
-### Logs
-
-Check application logs for detailed error information:
-```bash
-tail -f logs/application.log
-```
-
-## 📚 API Documentation
-
-- **Swagger UI**: http://localhost:8080/api/swagger-ui.html
-- **OpenAPI Spec**: http://localhost:8080/api/api-docs
+---
 
 ## 🤝 Contributing
-
-1. Create a feature branch
-2. Implement your changes
+1. Fork & branch
+2. Implement changes
 3. Add tests
-4. Submit a pull request
+4. Open a pull request
+
+---
 
 ## 📄 License
+MIT License
 
-This project is licensed under the MIT License. 
+---
+
+> _Developed for efficient device and SIM management in modern organizations._ 
