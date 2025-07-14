@@ -1,0 +1,2075 @@
+{
+	"info": {
+		"_postman_id": "telephone-manager-api",
+		"name": "TelephoneManager API",
+		"description": "API collection for testing TelephoneManager backend endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login as Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@company.com\",\n  \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.data && response.data.token) {",
+									"        pm.environment.set('authToken', response.data.token);",
+									"        console.log('Token saved:', response.data.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					]
+				},
+				{
+					"name": "Login as Assigner",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"assigner@company.com\",\n  \"password\": \"assigner123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.data && response.data.token) {",
+									"        pm.environment.set('authToken', response.data.token);",
+									"        console.log('Token saved:', response.data.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					]
+				},
+				{
+					"name": "Login as User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@company.com\",\n  \"password\": \"user123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.data && response.data.token) {",
+									"        pm.environment.set('authToken', response.data.token);",
+									"        console.log('Token saved:', response.data.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					]
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Management",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users?page=1&limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@company.com\",\n  \"password\": \"password123\",\n  \"role\": \"USER\",\n  \"department\": \"IT\",\n  \"position\": \"Developer\",\n  \"status\": \"ACTIVE\",\n  \"phone\": \"+1234567890\",\n  \"address\": \"123 Main St, City\",\n  \"manager\": \"Jane Smith\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe Updated\",\n  \"email\": \"john.doe@company.com\",\n  \"role\": \"USER\",\n  \"department\": \"IT\",\n  \"position\": \"Senior Developer\",\n  \"status\": \"ACTIVE\",\n  \"phone\": \"+1234567890\",\n  \"address\": \"123 Main St, City\",\n  \"manager\": \"Jane Smith\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users by Department",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/department/IT?page=1&limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"department",
+								"IT"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users by Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/status/ACTIVE?page=1&limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"status",
+								"ACTIVE"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users by Role",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/role/USER?page=1&limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"role",
+								"USER"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Phone Management",
+			"item": [
+				{
+					"name": "Get All Phones (Admin/Assigner only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/phones?page=1&limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["phones"],
+							"query": [
+								{ "key": "page", "value": "1" },
+								{ "key": "limit", "value": "10" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Only Admin and Assigner can access this endpoint."
+				},
+				{
+					"name": "Get Phone by ID (Admin/Assigner/Assigned User)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/phones/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["phones", "1"]
+						}
+					},
+					"response": [],
+					"description": "Admin and Assigner can access any phone. User can only access their assigned phone."
+				},
+				{
+					"name": "Get My Phone (User only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/phones/{{myPhoneId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["phones", "{{myPhoneId}}"]
+						}
+					},
+					"response": [],
+					"description": "User: Replace {{myPhoneId}} with the ID of your assigned phone."
+				},
+				{
+					"name": "Create Phone (Admin only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy S21\",\n  \"imei\": \"123456789012345\",\n  \"status\": \"AVAILABLE\",\n  \"notes\": \"New phone\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/phones",
+							"host": ["{{baseUrl}}"],
+							"path": ["phones"]
+						}
+					},
+					"response": [],
+					"description": "Only Admin can create phones."
+				},
+				{
+					"name": "Update Phone (Admin only)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy S21 Ultra\",\n  \"imei\": \"123456789012345\",\n  \"status\": \"ASSIGNED\",\n  \"assignedToId\": 2,\n  \"notes\": \"Assigned to user\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/phones/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["phones", "1"]
+						}
+					},
+					"response": [],
+					"description": "Only Admin can update phones."
+				},
+				{
+					"name": "Delete Phone (Admin only)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/phones/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["phones", "1"]
+						}
+					},
+					"response": [],
+					"description": "Only Admin can delete phones."
+				},
+				{
+					"name": "Assign Phone to User (Admin/Assigner only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 2\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/phones/1/assign",
+							"host": ["{{baseUrl}}"],
+							"path": ["phones", "1", "assign"]
+						}
+					},
+					"response": [],
+					"description": "Assign a phone to a specific user. Only Admin and Assigner can perform this action."
+				},
+				{
+					"name": "Unassign Phone from User (Admin/Assigner only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/phones/1/unassign",
+							"host": ["{{baseUrl}}"],
+							"path": ["phones", "1", "unassign"]
+						}
+					},
+					"response": [],
+					"description": "Unassign a phone from its current user. Only Admin and Assigner can perform this action."
+				},
+				{
+					"name": "Transfer Phone to Another User (Admin/Assigner only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"newUserId\": 3\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/phones/1/transfer",
+							"host": ["{{baseUrl}}"],
+							"path": ["phones", "1", "transfer"]
+						}
+					},
+					"response": [],
+					"description": "Transfer a phone from current user to another user. Only Admin and Assigner can perform this action."
+				}
+			]
+		},
+		{
+			"name": "SIM Card Management",
+			"item": [
+				{
+					"name": "Get All SIM Cards (Admin/Assigner only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/simcards?page=1&limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["simcards"],
+							"query": [
+								{ "key": "page", "value": "1" },
+								{ "key": "limit", "value": "10" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Only Admin and Assigner can access this endpoint."
+				},
+				{
+					"name": "Get SIM Card by ID (Admin/Assigner/Assigned User)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/simcards/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["simcards", "1"]
+						}
+					},
+					"response": [],
+					"description": "Admin and Assigner can access any SIM card. User can only access their assigned SIM card."
+				},
+				{
+					"name": "Get My SIM Card (User only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/simcards/{{mySimCardId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["simcards", "{{mySimCardId}}"]
+						}
+					},
+					"response": [],
+					"description": "User: Replace {{mySimCardId}} with the ID of your assigned SIM card."
+				},
+				{
+					"name": "Create SIM Card (Admin only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"number\": \"+1234567890\",\n  \"iccid\": \"8901234567890123456\",\n  \"status\": \"AVAILABLE\",\n  \"pin\": \"1234\",\n  \"puk\": \"12345678\",\n  \"poke\": \"87654321\",\n  \"notes\": \"New SIM card\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/simcards",
+							"host": ["{{baseUrl}}"],
+							"path": ["simcards"]
+						}
+					},
+					"response": [],
+					"description": "Only Admin can create SIM cards."
+				},
+				{
+					"name": "Update SIM Card (Admin only)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"number\": \"+1234567890\",\n  \"iccid\": \"8901234567890123456\",\n  \"status\": \"ASSIGNED\",\n  \"assignedToId\": 2,\n  \"pin\": \"1234\",\n  \"puk\": \"12345678\",\n  \"poke\": \"87654321\",\n  \"notes\": \"Assigned to user\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/simcards/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["simcards", "1"]
+						}
+					},
+					"response": [],
+					"description": "Only Admin can update SIM cards."
+				},
+				{
+					"name": "Delete SIM Card (Admin only)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/simcards/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["simcards", "1"]
+						}
+					},
+					"response": [],
+					"description": "Only Admin can delete SIM cards."
+				},
+				{
+					"name": "Assign SIM Card to User (Admin/Assigner only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 2\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/simcards/1/assign",
+							"host": ["{{baseUrl}}"],
+							"path": ["simcards", "1", "assign"]
+						}
+					},
+					"response": [],
+					"description": "Assign a SIM card to a specific user. Only Admin and Assigner can perform this action."
+				},
+				{
+					"name": "Unassign SIM Card from User (Admin/Assigner only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/simcards/1/unassign",
+							"host": ["{{baseUrl}}"],
+							"path": ["simcards", "1", "unassign"]
+						}
+					},
+					"response": [],
+					"description": "Unassign a SIM card from its current user. Only Admin and Assigner can perform this action."
+				},
+				{
+					"name": "Transfer SIM Card to Another User (Admin/Assigner only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"newUserId\": 3\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/simcards/1/transfer",
+							"host": ["{{baseUrl}}"],
+							"path": ["simcards", "1", "transfer"]
+						}
+					},
+					"response": [],
+					"description": "Transfer a SIM card from current user to another user. Only Admin and Assigner can perform this action."
+				}
+			]
+		},
+		{
+			"name": "Assignment History",
+			"item": [
+				{
+					"name": "Get Phone Assignment History",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/assignment-history/phone/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["assignment-history", "phone", "1"]
+						}
+					},
+					"response": [],
+					"description": "Get assignment/transfer history for a phone by ID."
+				},
+				{
+					"name": "Get SIM Card Assignment History",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/assignment-history/sim/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["assignment-history", "sim", "1"]
+						}
+					},
+					"response": [],
+					"description": "Get assignment/transfer history for a SIM card by ID."
+				},
+				{
+					"name": "Get User Assignment History",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/assignment-history/user/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["assignment-history", "user", "1"]
+						}
+					},
+					"response": [],
+					"description": "Get assignment/transfer history for a user by ID."
+				}
+			]
+		},
+		{
+			"name": "Dashboard & Reporting",
+			"item": [
+				{
+					"name": "Get Dashboard Overview (Admin/Assigner only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard/overview",
+							"host": ["{{baseUrl}}"],
+							"path": ["dashboard", "overview"]
+						}
+					},
+					"response": [],
+					"description": "Get overall dashboard statistics including totals, assignments, and recent activity."
+				},
+				{
+					"name": "Get Phone Statistics (Admin/Assigner only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard/phones/stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["dashboard", "phones", "stats"]
+						}
+					},
+					"response": [],
+					"description": "Get detailed phone statistics including status distribution, brand distribution, and assignment rates."
+				},
+				{
+					"name": "Get SIM Card Statistics (Admin/Assigner only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard/simcards/stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["dashboard", "simcards", "stats"]
+						}
+					},
+					"response": [],
+					"description": "Get detailed SIM card statistics including status distribution and assignment rates."
+				},
+				{
+					"name": "Get User Statistics (Admin/Assigner only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard/users/stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["dashboard", "users", "stats"]
+						}
+					},
+					"response": [],
+					"description": "Get user statistics including role distribution, department distribution, and assignment counts."
+				},
+				{
+					"name": "Get Recent Activity (Admin/Assigner only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard/recent-activity?limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["dashboard", "recent-activity"],
+							"query": [
+								{ "key": "limit", "value": "10" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Get recent assignment, transfer, and activity history."
+				},
+				{
+					"name": "Get System Alerts (Admin/Assigner only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard/alerts",
+							"host": ["{{baseUrl}}"],
+							"path": ["dashboard", "alerts"]
+						}
+					},
+					"response": [],
+					"description": "Get system alerts for items needing attention (damaged phones, blocked SIMs, multiple assignments)."
+				}
+			]
+		},
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "Get User Notifications",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/notifications?page=1&limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["notifications"],
+							"query": [
+								{ "key": "page", "value": "1" },
+								{ "key": "limit", "value": "10" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Get notifications for the current user with pagination."
+				},
+				{
+					"name": "Get Unread Notifications Count",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/notifications/unread",
+							"host": ["{{baseUrl}}"],
+							"path": ["notifications", "unread"]
+						}
+					},
+					"response": [],
+					"description": "Get count of unread notifications for current user."
+				},
+				{
+					"name": "Mark Notification as Read",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/notifications/1/read",
+							"host": ["{{baseUrl}}"],
+							"path": ["notifications", "1", "read"]
+						}
+					},
+					"response": [],
+					"description": "Mark a specific notification as read."
+				},
+				{
+					"name": "Mark All Notifications as Read",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/notifications/read-all",
+							"host": ["{{baseUrl}}"],
+							"path": ["notifications", "read-all"]
+						}
+					},
+					"response": [],
+					"description": "Mark all notifications as read for current user."
+				},
+				{
+					"name": "Delete Notification",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/notifications/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["notifications", "1"]
+						}
+					},
+					"response": [],
+					"description": "Delete a specific notification."
+				},
+				{
+					"name": "Send Notification (Admin/Assigner only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"System Maintenance\",\n  \"message\": \"System will be down for maintenance tonight.\",\n  \"type\": \"SYSTEM\",\n  \"userId\": 2\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/notifications/send",
+							"host": ["{{baseUrl}}"],
+							"path": ["notifications", "send"]
+						}
+					},
+					"response": [],
+					"description": "Send a notification to specific users. Only Admin and Assigner can send notifications."
+				}
+			]
+		},
+		{
+			"name": "Audit Logs",
+			"item": [
+				{
+					"name": "Get Audit Logs (Admin only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/audit-logs?page=1&limit=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["audit-logs"],
+							"query": [
+								{ "key": "page", "value": "1" },
+								{ "key": "limit", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Get audit logs with filtering and pagination. Only Admin can access audit logs."
+				},
+				{
+					"name": "Get User Audit Logs (Admin only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/audit-logs/user/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["audit-logs", "user", "1"]
+						}
+					},
+					"response": [],
+					"description": "Get audit logs for a specific user. Only Admin can access."
+				},
+				{
+					"name": "Get Entity Audit Logs (Admin only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/audit-logs/entity/phone/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["audit-logs", "entity", "phone", "1"]
+						}
+					},
+					"response": [],
+					"description": "Get audit logs for a specific entity (phone, simcard, user). Only Admin can access."
+				},
+				{
+					"name": "Get Audit Log Summary (Admin only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/audit-logs/summary",
+							"host": ["{{baseUrl}}"],
+							"path": ["audit-logs", "summary"]
+						}
+					},
+					"response": [],
+					"description": "Get audit log statistics and summary. Only Admin can access."
+				},
+				{
+					"name": "Export Audit Logs (Admin only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/audit-logs/export",
+							"host": ["{{baseUrl}}"],
+							"path": ["audit-logs", "export"]
+						}
+					},
+					"response": [],
+					"description": "Export audit logs to CSV format. Only Admin can access."
+				}
+			]
+		},
+		{
+			"name": "User Settings",
+			"item": [
+				{
+					"name": "Get User Settings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/user/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "user", "1"]
+						}
+					},
+					"response": [],
+					"description": "Get user settings for a specific user. Creates default settings if none exist."
+				},
+				{
+					"name": "Update User Settings",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"theme\": \"dark\",\n  \"language\": \"fr\",\n  \"timezone\": \"Europe/Paris\",\n  \"dateFormat\": \"dd/MM/yyyy\",\n  \"timeFormat\": \"HH:mm\",\n  \"notificationsEnabled\": true,\n  \"emailNotifications\": true,\n  \"smsNotifications\": false,\n  \"pushNotifications\": true,\n  \"autoRefreshInterval\": 60,\n  \"pageSize\": 20,\n  \"showHelpTooltips\": true,\n  \"compactMode\": false,\n  \"sidebarCollapsed\": false,\n  \"dashboardLayout\": \"grid\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/settings/user/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "user", "1"]
+						}
+					},
+					"response": [],
+					"description": "Update user settings for a specific user."
+				},
+				{
+					"name": "Delete User Settings",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/user/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "user", "1"]
+						}
+					},
+					"response": [],
+					"description": "Delete user settings for a specific user."
+				},
+				{
+					"name": "Reset User Settings to Defaults",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/user/1/reset",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "user", "1", "reset"]
+						}
+					},
+					"response": [],
+					"description": "Reset user settings to default values."
+				},
+				{
+					"name": "Update Theme",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/user/1/theme?theme=dark",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "user", "1", "theme"],
+							"query": [
+								{ "key": "theme", "value": "dark" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Update user theme preference."
+				},
+				{
+					"name": "Update Language",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/user/1/language?language=fr",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "user", "1", "language"],
+							"query": [
+								{ "key": "language", "value": "fr" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Update user language preference."
+				},
+				{
+					"name": "Update Timezone",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/user/1/timezone?timezone=Europe/Paris",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "user", "1", "timezone"],
+							"query": [
+								{ "key": "timezone", "value": "Europe/Paris" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Update user timezone preference."
+				},
+				{
+					"name": "Update Notification Settings",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/user/1/notifications?notificationsEnabled=true&emailNotifications=true&smsNotifications=false&pushNotifications=true",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "user", "1", "notifications"],
+							"query": [
+								{ "key": "notificationsEnabled", "value": "true" },
+								{ "key": "emailNotifications", "value": "true" },
+								{ "key": "smsNotifications", "value": "false" },
+								{ "key": "pushNotifications", "value": "true" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Update user notification preferences."
+				},
+				{
+					"name": "Update Page Size",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/user/1/page-size?pageSize=25",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "user", "1", "page-size"],
+							"query": [
+								{ "key": "pageSize", "value": "25" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Update user page size preference."
+				}
+			]
+		},
+		{
+			"name": "System Settings",
+			"item": [
+				{
+					"name": "Get All System Settings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/system?page=0&size=20&sortBy=key&sortDir=asc",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system"],
+							"query": [
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" },
+								{ "key": "sortBy", "value": "key" },
+								{ "key": "sortDir", "value": "asc" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Get all system settings with pagination. Admin only."
+				},
+				{
+					"name": "Get System Setting by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/system/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system", "1"]
+						}
+					},
+					"response": [],
+					"description": "Get system setting by ID. Admin only."
+				},
+				{
+					"name": "Get System Setting by Key",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/system/key/app.name",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system", "key", "app.name"]
+						}
+					},
+					"response": [],
+					"description": "Get system setting by key. Admin only."
+				},
+				{
+					"name": "Get System Setting Value",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/system/value/app.name",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system", "value", "app.name"]
+						}
+					},
+					"response": [],
+					"description": "Get system setting value by key. Admin and Assigner can access."
+				},
+				{
+					"name": "Create System Setting",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"key\": \"app.name\",\n  \"value\": \"TelephoneManager\",\n  \"description\": \"Application name\",\n  \"category\": \"general\",\n  \"dataType\": \"string\",\n  \"isEncrypted\": false,\n  \"isEditable\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/settings/system",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system"]
+						}
+					},
+					"response": [],
+					"description": "Create a new system setting. Admin only."
+				},
+				{
+					"name": "Update System Setting",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"key\": \"app.name\",\n  \"value\": \"TelephoneManager v2.0\",\n  \"description\": \"Updated application name\",\n  \"category\": \"general\",\n  \"dataType\": \"string\",\n  \"isEncrypted\": false,\n  \"isEditable\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/settings/system/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system", "1"]
+						}
+					},
+					"response": [],
+					"description": "Update system setting by ID. Admin only."
+				},
+				{
+					"name": "Update System Setting by Key",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/system/key/app.name?value=TelephoneManager%20v2.0",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system", "key", "app.name"],
+							"query": [
+								{ "key": "value", "value": "TelephoneManager v2.0" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Update system setting value by key. Admin only."
+				},
+				{
+					"name": "Delete System Setting",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/system/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system", "1"]
+						}
+					},
+					"response": [],
+					"description": "Delete system setting by ID. Admin only."
+				},
+				{
+					"name": "Delete System Setting by Key",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/system/key/app.name",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system", "key", "app.name"]
+						}
+					},
+					"response": [],
+					"description": "Delete system setting by key. Admin only."
+				},
+				{
+					"name": "Get Settings by Category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/system/category/general?page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system", "category", "general"],
+							"query": [
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Get system settings by category. Admin only."
+				},
+				{
+					"name": "Get Settings by Category (List)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/system/category/general/list",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system", "category", "general", "list"]
+						}
+					},
+					"response": [],
+					"description": "Get system settings by category as list. Admin only."
+				},
+				{
+					"name": "Get Editable Settings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/system/editable?page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system", "editable"],
+							"query": [
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Get editable system settings. Admin only."
+				},
+				{
+					"name": "Search Settings by Key",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/system/search/key?key=app&page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system", "search", "key"],
+							"query": [
+								{ "key": "key", "value": "app" },
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Search system settings by key. Admin only."
+				},
+				{
+					"name": "Search Settings by Description",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/system/search/description?description=application&page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system", "search", "description"],
+							"query": [
+								{ "key": "description", "value": "application" },
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Search system settings by description. Admin only."
+				},
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/system/categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system", "categories"]
+						}
+					},
+					"response": [],
+					"description": "Get all system setting categories. Admin only."
+				},
+				{
+					"name": "Check Setting Exists",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/settings/system/exists/app.name",
+							"host": ["{{baseUrl}}"],
+							"path": ["settings", "system", "exists", "app.name"]
+						}
+					},
+					"response": [],
+					"description": "Check if system setting exists by key. Admin only."
+				}
+			]
+		},
+		{
+			"name": "File Upload",
+			"item": [
+				{
+					"name": "Upload File",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "uploadedById",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "uploadType",
+									"value": "DOCUMENT",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Sample document upload",
+									"type": "text"
+								},
+								{
+									"key": "relatedEntityType",
+									"value": "user",
+									"type": "text"
+								},
+								{
+									"key": "relatedEntityId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "isPublic",
+									"value": "false",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/files/upload",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "upload"]
+						}
+					},
+					"response": [],
+					"description": "Upload a file with metadata. All authenticated users can upload files."
+				},
+				{
+					"name": "Download File",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/1/download",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "1", "download"]
+						}
+					},
+					"response": [],
+					"description": "Download a file by ID. All authenticated users can download files."
+				},
+				{
+					"name": "Get File Info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "1"]
+						}
+					},
+					"response": [],
+					"description": "Get file information by ID. All authenticated users can access."
+				},
+				{
+					"name": "Get All Files",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files?page=0&size=20&sortBy=uploadedAt&sortDir=desc",
+							"host": ["{{baseUrl}}"],
+							"path": ["files"],
+							"query": [
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" },
+								{ "key": "sortBy", "value": "uploadedAt" },
+								{ "key": "sortDir", "value": "desc" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Get all files with pagination. Admin and Assigner can access."
+				},
+				{
+					"name": "Get Files by Upload Type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/type/DOCUMENT?page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "type", "DOCUMENT"],
+							"query": [
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Get files by upload type. Admin and Assigner can access."
+				},
+				{
+					"name": "Get Files by User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/user/1?page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "user", "1"],
+							"query": [
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Get files uploaded by a specific user. All authenticated users can access."
+				},
+				{
+					"name": "Get Files by Related Entity",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/related/user/1?page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "related", "user", "1"],
+							"query": [
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Get files related to a specific entity. All authenticated users can access."
+				},
+				{
+					"name": "Get Public Files",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/public?page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "public"],
+							"query": [
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Get public files. All authenticated users can access."
+				},
+				{
+					"name": "Search Files by File Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/search/filename?fileName=document&page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "search", "filename"],
+							"query": [
+								{ "key": "fileName", "value": "document" },
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Search files by file name. Admin and Assigner can access."
+				},
+				{
+					"name": "Search Files by Original Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/search/originalname?originalName=report&page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "search", "originalname"],
+							"query": [
+								{ "key": "originalName", "value": "report" },
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Search files by original name. Admin and Assigner can access."
+				},
+				{
+					"name": "Search Files by Description",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/search/description?description=sample&page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "search", "description"],
+							"query": [
+								{ "key": "description", "value": "sample" },
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Search files by description. Admin and Assigner can access."
+				},
+				{
+					"name": "Get Files by Content Type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/content-type/application/pdf?page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "content-type", "application/pdf"],
+							"query": [
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Get files by content type. Admin and Assigner can access."
+				},
+				{
+					"name": "Get Files by File Extension",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/extension/pdf?page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "extension", "pdf"],
+							"query": [
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Get files by file extension. Admin and Assigner can access."
+				},
+				{
+					"name": "Get Files by Size Range",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/size-range?minSize=1000&maxSize=1000000&page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "size-range"],
+							"query": [
+								{ "key": "minSize", "value": "1000" },
+								{ "key": "maxSize", "value": "1000000" },
+								{ "key": "page", "value": "0" },
+								{ "key": "size", "value": "20" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Get files by size range. Admin and Assigner can access."
+				},
+				{
+					"name": "Delete File",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "1"]
+						}
+					},
+					"response": [],
+					"description": "Delete a file by ID. Admin and Assigner can delete files."
+				},
+				{
+					"name": "Update File Metadata",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/1/metadata?description=Updated%20description&isPublic=true",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "1", "metadata"],
+							"query": [
+								{ "key": "description", "value": "Updated description" },
+								{ "key": "isPublic", "value": "true" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Update file metadata. All authenticated users can update their own files."
+				},
+				{
+					"name": "Get File Statistics by User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/stats/user/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "stats", "user", "1"]
+						}
+					},
+					"response": [],
+					"description": "Get file statistics for a specific user. All authenticated users can access."
+				},
+				{
+					"name": "Get File Count by Upload Type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/stats/type/DOCUMENT",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "stats", "type", "DOCUMENT"]
+						}
+					},
+					"response": [],
+					"description": "Get file count by upload type. Admin and Assigner can access."
+				},
+				{
+					"name": "Get All Upload Types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/upload-types",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "upload-types"]
+						}
+					},
+					"response": [],
+					"description": "Get all available upload types. All authenticated users can access."
+				},
+				{
+					"name": "Get All Content Types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/content-types",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "content-types"]
+						}
+					},
+					"response": [],
+					"response": [],
+					"description": "Get all content types. Admin and Assigner can access."
+				},
+				{
+					"name": "Get All File Extensions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/files/extensions",
+							"host": ["{{baseUrl}}"],
+							"path": ["files", "extensions"]
+						}
+					},
+					"response": [],
+					"description": "Get all file extensions. Admin and Assigner can access."
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080/api",
+			"type": "string"
+		}
+	]
+} 
