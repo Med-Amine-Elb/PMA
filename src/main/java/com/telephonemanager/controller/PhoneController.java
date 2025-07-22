@@ -18,7 +18,7 @@ import java.util.Map;
 import org.springframework.security.core.Authentication;
 
 @RestController
-@RequestMapping("/phones")
+@RequestMapping("/api/phones")
 @Tag(name = "Phone Management", description = "Phone management endpoints")
 public class PhoneController {
     @Autowired
@@ -98,6 +98,121 @@ public class PhoneController {
             response.put("success", false);
             response.put("error", Map.of(
                 "code", "FETCH_ERROR",
+                "message", e.getMessage()
+            ));
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    @GetMapping("/{id}/usage-stats")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ASSIGNER') or hasRole('USER')")
+    @Operation(summary = "Get phone usage statistics", description = "Get phone usage statistics by phone ID (Admin/Assigner/Assigned User only)")
+    public ResponseEntity<Map<String, Object>> getPhoneUsageStats(@PathVariable Long id, Authentication authentication) {
+        System.out.println("[DEBUG] Entered getPhoneUsageStats for phone ID: " + id);
+        System.out.println("[DEBUG] Authentication object: " + authentication);
+        // TODO: Replace with real data fetching logic
+        // For now, allow only admin, assigner, or assigned user
+        try {
+            PhoneDto phone = phoneService.getPhoneById(id).orElse(null);
+            if (phone == null) {
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", false);
+                response.put("error", Map.of(
+                    "code", "NOT_FOUND",
+                    "message", "Phone not found"
+                ));
+                return ResponseEntity.status(404).body(response);
+            }
+            boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+            boolean isAssigner = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ASSIGNER"));
+            boolean isUser = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
+            String userEmail = authentication.getName();
+            boolean isOwner = phone.getAssignedToId() != null && phone.getAssignedToId().equals(phoneService.getUserIdByEmail(userEmail));
+            if (!(isAdmin || isAssigner || (isUser && isOwner))) {
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", false);
+                response.put("error", Map.of(
+                    "code", "FORBIDDEN",
+                    "message", "Access denied"
+                ));
+                return ResponseEntity.status(403).body(response);
+            }
+            Map<String, Object> stats = Map.of(
+                "callsThisMonth", 127,
+                "smsThisMonth", 89,
+                "dataUsedGB", 12.5,
+                "dataLimitGB", 50,
+                "averageCallDuration", "3m 45s",
+                "mostUsedApp", "Teams",
+                "screenTime", "6h 32m",
+                "batteryHealth", 98,
+                "storageUsed", 45
+            );
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("data", stats);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("error", Map.of(
+                "code", "USAGE_STATS_ERROR",
+                "message", e.getMessage()
+            ));
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    @GetMapping("/{id}/maintenance-history")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ASSIGNER') or hasRole('USER')")
+    @Operation(summary = "Get phone maintenance history", description = "Get phone maintenance history by phone ID (Admin/Assigner/Assigned User only)")
+    public ResponseEntity<Map<String, Object>> getPhoneMaintenanceHistory(@PathVariable Long id, Authentication authentication) {
+        // TODO: Replace with real data fetching logic
+        try {
+            PhoneDto phone = phoneService.getPhoneById(id).orElse(null);
+            if (phone == null) {
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", false);
+                response.put("error", Map.of(
+                    "code", "NOT_FOUND",
+                    "message", "Phone not found"
+                ));
+                return ResponseEntity.status(404).body(response);
+            }
+            boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+            boolean isAssigner = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ASSIGNER"));
+            boolean isUser = authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
+            String userEmail = authentication.getName();
+            boolean isOwner = phone.getAssignedToId() != null && phone.getAssignedToId().equals(phoneService.getUserIdByEmail(userEmail));
+            if (!(isAdmin || isAssigner || (isUser && isOwner))) {
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", false);
+                response.put("error", Map.of(
+                    "code", "FORBIDDEN",
+                    "message", "Access denied"
+                ));
+                return ResponseEntity.status(403).body(response);
+            }
+            // Mock maintenance history data
+            var history = java.util.List.of(
+                Map.of(
+                    "id", "maint_1",
+                    "date", "2024-01-15",
+                    "type", "Mise à jour logicielle",
+                    "description", "iOS 17.1.2 - Corrections de sécurité",
+                    "status", "Terminé",
+                    "technician", "Jean Dupont"
+                )
+            );
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("data", history);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("error", Map.of(
+                "code", "MAINTENANCE_HISTORY_ERROR",
                 "message", e.getMessage()
             ));
             return ResponseEntity.badRequest().body(response);
@@ -255,5 +370,29 @@ public class PhoneController {
             ));
             return ResponseEntity.badRequest().body(response);
         }
+    }
+
+    @PostMapping("/{id}/maintenance-request")
+    @PreAuthorize("hasRole('USER')")
+    @Operation(summary = "Request maintenance for a phone", description = "User can request maintenance for their assigned phone")
+    public ResponseEntity<Map<String, Object>> requestMaintenance(
+        @PathVariable Long id,
+        @RequestBody Map<String, String> requestBody,
+        Authentication authentication
+    ) {
+        String description = requestBody.get("description");
+        String urgency = requestBody.get("urgency");
+        // TODO: Check if user is assigned to this phone and store request in DB
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", "Maintenance request submitted for review.");
+        response.put("data", Map.of(
+            "phoneId", id,
+            "requestedBy", authentication.getName(),
+            "description", description,
+            "urgency", urgency,
+            "status", "PENDING"
+        ));
+        return ResponseEntity.ok(response);
     }
 } 

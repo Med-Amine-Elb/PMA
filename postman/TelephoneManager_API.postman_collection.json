@@ -1045,6 +1045,90 @@
 					},
 					"response": [],
 					"description": "Send a notification to specific users. Only Admin and Assigner can send notifications."
+				},
+				{
+					"name": "Send Real-Time Notification (Test)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Test Real-Time\",\n  \"message\": \"This is a real-time notification test.\",\n  \"type\": \"info\",\n  \"userId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/notifications/send",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "notifications", "send"]
+						}
+					},
+					"response": [],
+					"description": "Trigger a real-time notification for userId 1. Subscribe to /queue/notifications/1 in a WebSocket client to see the result."
+				},
+				{
+					"name": "Send Notification to User (Test)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Test to User\",\n  \"message\": \"This is a notification to a specific user.\",\n  \"type\": \"info\",\n  \"userId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/notifications/send",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "notifications", "send"]
+						}
+					},
+					"response": [],
+					"description": "Send notification to user with ID 1."
+				},
+				{
+					"name": "Send Notification to All Admins (Test)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Test to Admins\",\n  \"message\": \"This is a notification to all admins.\",\n  \"type\": \"info\",\n  \"targetRole\": \"ADMIN\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/notifications/send",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "notifications", "send"]
+						}
+					},
+					"response": [],
+					"description": "Send notification to all admins."
+				},
+				{
+					"name": "Send Notification to All Assigners (Test)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Test to Assigners\",\n  \"message\": \"This is a notification to all assigners.\",\n  \"type\": \"info\",\n  \"targetRole\": \"ASSIGNER\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/notifications/send",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "notifications", "send"]
+						}
+					},
+					"response": [],
+					"description": "Send notification to all assigners."
 				}
 			]
 		},
@@ -1660,7 +1744,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/upload",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "upload"]
+							"path": ["api", "files", "upload"]
 						}
 					},
 					"response": [],
@@ -1676,7 +1760,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/1/download",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "1", "download"]
+							"path": ["api", "files", "1", "download"]
 						}
 					},
 					"response": [],
@@ -1692,7 +1776,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/1",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "1"]
+							"path": ["api", "files", "1"]
 						}
 					},
 					"response": [],
@@ -1708,13 +1792,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files?page=0&size=20&sortBy=uploadedAt&sortDir=desc",
 							"host": ["{{baseUrl}}"],
-							"path": ["files"],
-							"query": [
-								{ "key": "page", "value": "0" },
-								{ "key": "size", "value": "20" },
-								{ "key": "sortBy", "value": "uploadedAt" },
-								{ "key": "sortDir", "value": "desc" }
-							]
+							"path": ["api", "files"]
 						}
 					},
 					"response": [],
@@ -1730,7 +1808,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/type/DOCUMENT?page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "type", "DOCUMENT"],
+							"path": ["api", "files", "type", "DOCUMENT"],
 							"query": [
 								{ "key": "page", "value": "0" },
 								{ "key": "size", "value": "20" }
@@ -1750,7 +1828,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/user/1?page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "user", "1"],
+							"path": ["api", "files", "user", "1"],
 							"query": [
 								{ "key": "page", "value": "0" },
 								{ "key": "size", "value": "20" }
@@ -1770,7 +1848,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/related/user/1?page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "related", "user", "1"],
+							"path": ["api", "files", "related", "user", "1"],
 							"query": [
 								{ "key": "page", "value": "0" },
 								{ "key": "size", "value": "20" }
@@ -1790,7 +1868,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/public?page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "public"],
+							"path": ["api", "files", "public"],
 							"query": [
 								{ "key": "page", "value": "0" },
 								{ "key": "size", "value": "20" }
@@ -1810,7 +1888,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/search/filename?fileName=document&page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "search", "filename"],
+							"path": ["api", "files", "search", "filename"],
 							"query": [
 								{ "key": "fileName", "value": "document" },
 								{ "key": "page", "value": "0" },
@@ -1831,7 +1909,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/search/originalname?originalName=report&page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "search", "originalname"],
+							"path": ["api", "files", "search", "originalname"],
 							"query": [
 								{ "key": "originalName", "value": "report" },
 								{ "key": "page", "value": "0" },
@@ -1852,7 +1930,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/search/description?description=sample&page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "search", "description"],
+							"path": ["api", "files", "search", "description"],
 							"query": [
 								{ "key": "description", "value": "sample" },
 								{ "key": "page", "value": "0" },
@@ -1873,7 +1951,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/content-type/application/pdf?page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "content-type", "application/pdf"],
+							"path": ["api", "files", "content-type", "application/pdf"],
 							"query": [
 								{ "key": "page", "value": "0" },
 								{ "key": "size", "value": "20" }
@@ -1893,7 +1971,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/extension/pdf?page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "extension", "pdf"],
+							"path": ["api", "files", "extension", "pdf"],
 							"query": [
 								{ "key": "page", "value": "0" },
 								{ "key": "size", "value": "20" }
@@ -1913,7 +1991,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/size-range?minSize=1000&maxSize=1000000&page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "size-range"],
+							"path": ["api", "files", "size-range"],
 							"query": [
 								{ "key": "minSize", "value": "1000" },
 								{ "key": "maxSize", "value": "1000000" },
@@ -1935,7 +2013,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/1",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "1"]
+							"path": ["api", "files", "1"]
 						}
 					},
 					"response": [],
@@ -1951,7 +2029,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/1/metadata?description=Updated%20description&isPublic=true",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "1", "metadata"],
+							"path": ["api", "files", "1", "metadata"],
 							"query": [
 								{ "key": "description", "value": "Updated description" },
 								{ "key": "isPublic", "value": "true" }
@@ -1971,7 +2049,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/stats/user/1",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "stats", "user", "1"]
+							"path": ["api", "files", "stats", "user", "1"]
 						}
 					},
 					"response": [],
@@ -1987,7 +2065,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/stats/type/DOCUMENT",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "stats", "type", "DOCUMENT"]
+							"path": ["api", "files", "stats", "type", "DOCUMENT"]
 						}
 					},
 					"response": [],
@@ -2003,7 +2081,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/upload-types",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "upload-types"]
+							"path": ["api", "files", "upload-types"]
 						}
 					},
 					"response": [],
@@ -2019,7 +2097,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/content-types",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "content-types"]
+							"path": ["api", "files", "content-types"]
 						}
 					},
 					"response": [],
@@ -2036,11 +2114,205 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/extensions",
 							"host": ["{{baseUrl}}"],
-							"path": ["files", "extensions"]
+							"path": ["api", "files", "extensions"]
 						}
 					},
 					"response": [],
 					"description": "Get all file extensions. Admin and Assigner can access."
+				}
+			]
+		},
+		{
+			"name": "Data Export",
+			"item": [
+				{
+					"name": "Export Users to CSV (Admin/Assigner only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/export/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "export", "users"],
+							"query": [
+								{ "key": "department", "value": "", "description": "optional" },
+								{ "key": "status", "value": "", "description": "optional" },
+								{ "key": "format", "value": "csv", "description": "csv|excel|json (default: csv)" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Export users data to CSV/Excel/JSON. Query: department, status, format. Auth: Admin/Assigner."
+				},
+				{
+					"name": "Export Phones to CSV (Admin/Assigner only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/export/phones",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "export", "phones"],
+							"query": [
+								{ "key": "status", "value": "", "description": "optional" },
+								{ "key": "brand", "value": "", "description": "optional" },
+								{ "key": "condition", "value": "", "description": "optional" },
+								{ "key": "format", "value": "csv", "description": "csv|excel|json (default: csv)" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Export phones data to CSV/Excel/JSON. Query: status, brand, condition, format. Auth: Admin/Assigner."
+				},
+				{
+					"name": "Export SIM Cards to CSV (Admin/Assigner only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/export/simcards",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "export", "simcards"],
+							"query": [
+								{ "key": "status", "value": "", "description": "optional" },
+								{ "key": "carrier", "value": "", "description": "optional" },
+								{ "key": "format", "value": "csv", "description": "csv|excel|json (default: csv)" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Export SIM cards data to CSV/Excel/JSON. Query: status, carrier, format. Auth: Admin/Assigner."
+				},
+				{
+					"name": "Export Attributions to CSV (Admin/Assigner only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/export/attributions",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "export", "attributions"],
+							"query": [
+								{ "key": "status", "value": "", "description": "optional" },
+								{ "key": "startDate", "value": "", "description": "optional (YYYY-MM-DD)" },
+								{ "key": "endDate", "value": "", "description": "optional (YYYY-MM-DD)" },
+								{ "key": "format", "value": "csv", "description": "csv|excel|json (default: csv)" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Export attributions data to CSV/Excel/JSON. Query: status, startDate, endDate, format. Auth: Admin/Assigner."
+				},
+				{
+					"name": "Export Requests to CSV (Admin/Assigner only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/export/requests",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "export", "requests"],
+							"query": [
+								{ "key": "status", "value": "", "description": "optional" },
+								{ "key": "type", "value": "", "description": "optional" },
+								{ "key": "priority", "value": "", "description": "optional" },
+								{ "key": "startDate", "value": "", "description": "optional (YYYY-MM-DD)" },
+								{ "key": "endDate", "value": "", "description": "optional (YYYY-MM-DD)" },
+								{ "key": "format", "value": "csv", "description": "csv|excel|json (default: csv)" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Export requests data to CSV/Excel/JSON. Query: status, type, priority, startDate, endDate, format. Auth: Admin/Assigner."
+				}
+			]
+		},
+		{
+			"name": "Phone Usage Stats",
+			"item": [
+				{
+					"name": "Get Latest Stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/phones/1/usage-stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "phones", "1", "usage-stats"]
+						}
+					},
+					"response": [],
+					"description": "Get phone usage statistics for phone with ID 1. Replace '1' with the desired phone ID."
+				}
+			]
+		},
+		{
+			"name": "Phone Usage & Maintenance",
+			"item": [
+				{
+					"name": "Get Phone Usage Stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/phones/1/usage-stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "phones", "1", "usage-stats"]
+						}
+					},
+					"response": [],
+					"description": "Get phone usage statistics for phone with ID 1. Replace '1' with the desired phone ID."
+				},
+				{
+					"name": "Get Phone Maintenance History",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/phones/1/maintenance-history",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "phones", "1", "maintenance-history"]
+						}
+					},
+					"response": [],
+					"description": "Get phone maintenance history for phone with ID 1. Replace '1' with the desired phone ID."
+				},
+				{
+					"name": "Request Maintenance (User)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Screen is cracked and needs replacement.\",\n  \"urgency\": \"high\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/phones/1/maintenance-request",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "phones", "1", "maintenance-request"]
+						}
+					},
+					"response": [],
+					"description": "User requests maintenance for phone with ID 1. Replace '1' with the desired phone ID."
 				}
 			]
 		}

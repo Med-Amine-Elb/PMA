@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/notifications")
+@RequestMapping("/api/notifications")
 @Tag(name = "Notifications", description = "Notification management endpoints")
 public class NotificationController {
     @Autowired
@@ -132,8 +132,8 @@ public class NotificationController {
     }
 
     @PostMapping("/send")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('ASSIGNER')")
-    @Operation(summary = "Send notification", description = "Send a notification to specific users (Admin/Assigner only)")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Send notification", description = "Send a notification to a user or all users of a role (Admin/Assigner/User)")
     public ResponseEntity<Map<String, Object>> sendNotification(
             @RequestBody Map<String, Object> request) {
         try {
@@ -141,7 +141,8 @@ public class NotificationController {
             String message = (String) request.get("message");
             String type = (String) request.get("type");
             Long userId = request.get("userId") != null ? Long.valueOf(request.get("userId").toString()) : null;
-            
+            String targetRole = request.get("targetRole") != null ? request.get("targetRole").toString() : null;
+
             if (title == null || message == null) {
                 Map<String, Object> response = new HashMap<>();
                 response.put("success", false);
@@ -151,8 +152,43 @@ public class NotificationController {
                 ));
                 return ResponseEntity.badRequest().body(response);
             }
-            
-            notificationService.sendNotification(title, message, type, userId);
+
+            if (userId != null) {
+                notificationService.sendNotificationToUser(title, message, type, userId);
+                System.out.println("[DEBUG] Notification sent to userId: " + userId);
+            } else if (targetRole != null) {
+                switch (targetRole.toUpperCase()) {
+                    case "ADMIN":
+                        notificationService.sendNotificationToRole(title, message, type, com.telephonemanager.entity.User.UserRole.ADMIN);
+                        System.out.println("[DEBUG] Notification sent to all ADMINs");
+                        break;
+                    case "ASSIGNER":
+                        notificationService.sendNotificationToRole(title, message, type, com.telephonemanager.entity.User.UserRole.ASSIGNER);
+                        System.out.println("[DEBUG] Notification sent to all ASSIGNERs");
+                        break;
+                    case "USER":
+                        notificationService.sendNotificationToRole(title, message, type, com.telephonemanager.entity.User.UserRole.USER);
+                        System.out.println("[DEBUG] Notification sent to all USERs");
+                        break;
+                    default:
+                        Map<String, Object> response = new HashMap<>();
+                        response.put("success", false);
+                        response.put("error", Map.of(
+                            "code", "INVALID_ROLE",
+                            "message", "Unknown targetRole: " + targetRole
+                        ));
+                        return ResponseEntity.badRequest().body(response);
+                }
+            } else {
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", false);
+                response.put("error", Map.of(
+                    "code", "NO_TARGET",
+                    "message", "You must specify either userId or targetRole (ADMIN, ASSIGNER, USER)"
+                ));
+                return ResponseEntity.badRequest().body(response);
+            }
+
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("message", "Notification sent successfully");

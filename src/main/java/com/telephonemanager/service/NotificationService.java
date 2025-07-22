@@ -7,16 +7,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import com.telephonemanager.entity.User.UserRole;
+import java.util.List;
 
 @Service
 public class NotificationService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     public Map<String, Object> getUserNotifications(String userEmail, int page, int limit) {
         Map<String, Object> result = new HashMap<>();
@@ -55,17 +61,42 @@ public class NotificationService {
         // In a real implementation, you would delete the notification
     }
 
-    public void sendNotification(String title, String message, String type, Long userId) {
-        // For now, just log the notification since we haven't implemented the Notification entity yet
-        // In a real implementation, you would save the notification to the database
-        
+    public void sendNotificationToUser(String title, String message, String type, Long userId) {
+        Map<String, Object> notification = Map.of(
+            "event", "notification:new",
+            "data", Map.of(
+                "title", title,
+                "message", message,
+                "type", type
+            )
+        );
         if (userId != null) {
             Optional<User> user = userRepository.findById(userId);
             if (user.isPresent()) {
-                System.out.println("Notification sent to user " + user.get().getName() + ": " + title + " - " + message);
+                System.out.println("[NOTIFY] Sent to user " + user.get().getName() + " (ID: " + userId + "): " + title + " - " + message);
+                messagingTemplate.convertAndSend("/queue/notifications/" + userId, notification);
+            } else {
+                System.err.println("[NOTIFY][ERROR] User ID " + userId + " not found. Notification not sent.");
             }
         } else {
-            System.out.println("System notification: " + title + " - " + message);
+            System.err.println("[NOTIFY][ERROR] userId is null. Notification not sent.");
         }
+    }
+
+    public void sendNotificationToRole(String title, String message, String type, UserRole role) {
+        List<User> users = userRepository.findByRole(role, PageRequest.of(0, 1000)).getContent();
+        if (users.isEmpty()) {
+            System.err.println("[NOTIFY][ERROR] No users found with role " + role + ". Notification not sent.");
+            return;
+        }
+        for (User user : users) {
+            sendNotificationToUser(title, message, type, user.getId());
+        }
+        System.out.println("[NOTIFY] Sent to all users with role " + role + ": " + title + " - " + message);
+    }
+
+    // Legacy method for backward compatibility
+    public void sendNotification(String title, String message, String type, Long userId) {
+        sendNotificationToUser(title, message, type, userId);
     }
 } 
