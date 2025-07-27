@@ -3,7 +3,7 @@ spring:
     name: telephone-manager-backend
   
   datasource:
-    url: jdbc:sqlserver://KASAYKO\\SQLEXPRESS:1433;databaseName=PhoneManagementDB;encrypt=true;trustServerCertificate=true
+    url:    jdbc:sqlserver://DESKTOP-291NBCQ:1433;databaseName=PhoneManagementDB;encrypt=true;trustServerCertificate=true
     username: sa # <-- change to your actual username if needed
     password: hamid # <-- change to your actual password if needed
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
@@ -56,7 +56,7 @@ logging:
 # OpenAPI Configuration
 springdoc:
   api-docs:
-    path: /api-docs
+    path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
     operationsSorter: method
