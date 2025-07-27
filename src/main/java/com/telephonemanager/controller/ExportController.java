@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.ByteArrayInputStream;
 
 @RestController
-@RequestMapping("/api/export")
+@RequestMapping("/export")
 public class ExportController {
 
     @Autowired

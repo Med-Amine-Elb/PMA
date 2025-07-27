@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/settings/user")
+@RequestMapping("/settings/user")
 @CrossOrigin(origins = "*")
 public class UserSettingsController {
     

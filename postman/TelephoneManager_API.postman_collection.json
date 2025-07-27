@@ -1061,7 +1061,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/notifications/send",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "notifications", "send"]
+							"path": ["notifications", "send"]
 						}
 					},
 					"response": [],
@@ -1082,7 +1082,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/notifications/send",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "notifications", "send"]
+							"path": ["notifications", "send"]
 						}
 					},
 					"response": [],
@@ -1103,7 +1103,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/notifications/send",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "notifications", "send"]
+							"path": ["notifications", "send"]
 						}
 					},
 					"response": [],
@@ -1124,7 +1124,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/notifications/send",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "notifications", "send"]
+							"path": ["notifications", "send"]
 						}
 					},
 					"response": [],
@@ -1744,7 +1744,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/upload",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "upload"]
+							"path": ["files", "upload"]
 						}
 					},
 					"response": [],
@@ -1760,7 +1760,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/1/download",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "1", "download"]
+							"path": ["files", "1", "download"]
 						}
 					},
 					"response": [],
@@ -1776,7 +1776,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/1",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "1"]
+							"path": ["files", "1"]
 						}
 					},
 					"response": [],
@@ -1792,7 +1792,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files?page=0&size=20&sortBy=uploadedAt&sortDir=desc",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files"]
+							"path": ["files"]
 						}
 					},
 					"response": [],
@@ -1808,7 +1808,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/type/DOCUMENT?page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "type", "DOCUMENT"],
+							"path": ["files", "type", "DOCUMENT"],
 							"query": [
 								{ "key": "page", "value": "0" },
 								{ "key": "size", "value": "20" }
@@ -1828,7 +1828,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/user/1?page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "user", "1"],
+							"path": ["files", "user", "1"],
 							"query": [
 								{ "key": "page", "value": "0" },
 								{ "key": "size", "value": "20" }
@@ -1848,7 +1848,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/related/user/1?page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "related", "user", "1"],
+							"path": ["files", "related", "user", "1"],
 							"query": [
 								{ "key": "page", "value": "0" },
 								{ "key": "size", "value": "20" }
@@ -1868,7 +1868,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/public?page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "public"],
+							"path": ["files", "public"],
 							"query": [
 								{ "key": "page", "value": "0" },
 								{ "key": "size", "value": "20" }
@@ -1888,7 +1888,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/search/filename?fileName=document&page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "search", "filename"],
+							"path": ["files", "search", "filename"],
 							"query": [
 								{ "key": "fileName", "value": "document" },
 								{ "key": "page", "value": "0" },
@@ -1909,7 +1909,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/search/originalname?originalName=report&page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "search", "originalname"],
+							"path": ["files", "search", "originalname"],
 							"query": [
 								{ "key": "originalName", "value": "report" },
 								{ "key": "page", "value": "0" },
@@ -1930,7 +1930,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/search/description?description=sample&page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "search", "description"],
+							"path": ["files", "search", "description"],
 							"query": [
 								{ "key": "description", "value": "sample" },
 								{ "key": "page", "value": "0" },
@@ -1951,7 +1951,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/content-type/application/pdf?page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "content-type", "application/pdf"],
+							"path": ["files", "content-type", "application/pdf"],
 							"query": [
 								{ "key": "page", "value": "0" },
 								{ "key": "size", "value": "20" }
@@ -1971,7 +1971,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/extension/pdf?page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "extension", "pdf"],
+							"path": ["files", "extension", "pdf"],
 							"query": [
 								{ "key": "page", "value": "0" },
 								{ "key": "size", "value": "20" }
@@ -1991,7 +1991,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/size-range?minSize=1000&maxSize=1000000&page=0&size=20",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "size-range"],
+							"path": ["files", "size-range"],
 							"query": [
 								{ "key": "minSize", "value": "1000" },
 								{ "key": "maxSize", "value": "1000000" },
@@ -2013,7 +2013,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/1",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "1"]
+							"path": ["files", "1"]
 						}
 					},
 					"response": [],
@@ -2029,7 +2029,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/1/metadata?description=Updated%20description&isPublic=true",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "1", "metadata"],
+							"path": ["files", "1", "metadata"],
 							"query": [
 								{ "key": "description", "value": "Updated description" },
 								{ "key": "isPublic", "value": "true" }
@@ -2049,7 +2049,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/stats/user/1",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "stats", "user", "1"]
+							"path": ["files", "stats", "user", "1"]
 						}
 					},
 					"response": [],
@@ -2065,7 +2065,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/stats/type/DOCUMENT",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "stats", "type", "DOCUMENT"]
+							"path": ["files", "stats", "type", "DOCUMENT"]
 						}
 					},
 					"response": [],
@@ -2081,7 +2081,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/upload-types",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "upload-types"]
+							"path": ["files", "upload-types"]
 						}
 					},
 					"response": [],
@@ -2097,10 +2097,9 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/content-types",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "content-types"]
+							"path": ["files", "content-types"]
 						}
 					},
-					"response": [],
 					"response": [],
 					"description": "Get all content types. Admin and Assigner can access."
 				},
@@ -2114,7 +2113,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/files/extensions",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "files", "extensions"]
+							"path": ["files", "extensions"]
 						}
 					},
 					"response": [],
@@ -2135,7 +2134,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/export/users",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "export", "users"],
+							"path": ["export", "users"],
 							"query": [
 								{ "key": "department", "value": "", "description": "optional" },
 								{ "key": "status", "value": "", "description": "optional" },
@@ -2156,7 +2155,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/export/phones",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "export", "phones"],
+							"path": ["export", "phones"],
 							"query": [
 								{ "key": "status", "value": "", "description": "optional" },
 								{ "key": "brand", "value": "", "description": "optional" },
@@ -2178,7 +2177,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/export/simcards",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "export", "simcards"],
+							"path": ["export", "simcards"],
 							"query": [
 								{ "key": "status", "value": "", "description": "optional" },
 								{ "key": "carrier", "value": "", "description": "optional" },
@@ -2199,7 +2198,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/export/attributions",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "export", "attributions"],
+							"path": ["export", "attributions"],
 							"query": [
 								{ "key": "status", "value": "", "description": "optional" },
 								{ "key": "startDate", "value": "", "description": "optional (YYYY-MM-DD)" },
@@ -2221,7 +2220,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/export/requests",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "export", "requests"],
+							"path": ["export", "requests"],
 							"query": [
 								{ "key": "status", "value": "", "description": "optional" },
 								{ "key": "type", "value": "", "description": "optional" },
@@ -2250,7 +2249,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/phones/1/usage-stats",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "phones", "1", "usage-stats"]
+							"path": ["phones", "1", "usage-stats"]
 						}
 					},
 					"response": [],
@@ -2271,7 +2270,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/phones/1/usage-stats",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "phones", "1", "usage-stats"]
+							"path": ["phones", "1", "usage-stats"]
 						}
 					},
 					"response": [],
@@ -2287,7 +2286,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/phones/1/maintenance-history",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "phones", "1", "maintenance-history"]
+							"path": ["phones", "1", "maintenance-history"]
 						}
 					},
 					"response": [],
@@ -2308,7 +2307,7 @@
 						"url": {
 							"raw": "{{baseUrl}}/phones/1/maintenance-request",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "phones", "1", "maintenance-request"]
+							"path": ["phones", "1", "maintenance-request"]
 						}
 					},
 					"response": [],

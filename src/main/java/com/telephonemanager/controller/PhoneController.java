@@ -18,7 +18,7 @@ import java.util.Map;
 import org.springframework.security.core.Authentication;
 
 @RestController
-@RequestMapping("/api/phones")
+@RequestMapping("/phones")
 @Tag(name = "Phone Management", description = "Phone management endpoints")
 public class PhoneController {
     @Autowired

@@ -28,6 +28,7 @@ com\telephonemanager\controller\AuthController.class
 com\telephonemanager\controller\SimCardController.class
 com\telephonemanager\service\NotificationService.class
 com\telephonemanager\entity\Message$MessageType.class
+com\telephonemanager\config\WebConfig.class
 com\telephonemanager\repository\UserRepository.class
 com\telephonemanager\service\ExportService.class
 com\telephonemanager\entity\AssignmentHistory$Type.class
@@ -65,6 +66,7 @@ com\telephonemanager\controller\MessageController.class
 com\telephonemanager\security\JwtUtil.class
 com\telephonemanager\service\SimCardService.class
 com\telephonemanager\utils\CsvExportUtil.class
+com\telephonemanager\config\WebConfig$1.class
 com\telephonemanager\dto\SystemSettingsDto.class
 com\telephonemanager\service\AuditLogService.class
 com\telephonemanager\repository\AttributionRepository.class
@@ -87,6 +89,7 @@ com\telephonemanager\entity\UserSettings.class
 com\telephonemanager\repository\ConversationRepository.class
 com\telephonemanager\security\JwtAuthenticationFilter.class
 com\telephonemanager\repository\MessageRepository.class
+com\telephonemanager\config\WebSocketConfig.class
 com\telephonemanager\repository\RequestRepository.class
 com\telephonemanager\dto\UserDto.class
 com\telephonemanager\entity\Attribution.class

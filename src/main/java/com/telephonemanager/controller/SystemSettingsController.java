@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/settings/system")
+@RequestMapping("/settings/system")
 @CrossOrigin(origins = "*")
 public class SystemSettingsController {
     
