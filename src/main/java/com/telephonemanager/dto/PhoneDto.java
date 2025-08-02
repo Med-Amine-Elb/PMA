@@ -1,10 +1,11 @@
 package com.telephonemanager.dto;
 
+import java.time.LocalDate;
+
 import com.telephonemanager.entity.Phone;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
-import java.time.LocalDate;
 
 public class PhoneDto {
     private Long id;
@@ -14,8 +15,14 @@ public class PhoneDto {
     private String model;
     @NotBlank
     private String imei;
+    private String serialNumber;
     @NotNull
     private Phone.Status status;
+    @NotNull
+    private Phone.Condition condition;
+    private String storage;
+    private String color;
+    private Double price;
     private Long assignedToId;
     private String assignedToName;
     private LocalDate assignedDate;
@@ -27,7 +34,12 @@ public class PhoneDto {
         this.brand = phone.getBrand();
         this.model = phone.getModel();
         this.imei = phone.getImei();
+        this.serialNumber = phone.getSerialNumber();
         this.status = phone.getStatus();
+        this.condition = phone.getCondition();
+        this.storage = phone.getStorage();
+        this.color = phone.getColor();
+        this.price = phone.getPrice();
         if (phone.getAssignedTo() != null) {
             this.assignedToId = phone.getAssignedTo().getId();
             this.assignedToName = phone.getAssignedTo().getName();
@@ -44,8 +56,18 @@ public class PhoneDto {
     public void setModel(String model) { this.model = model; }
     public String getImei() { return imei; }
     public void setImei(String imei) { this.imei = imei; }
+    public String getSerialNumber() { return serialNumber; }
+    public void setSerialNumber(String serialNumber) { this.serialNumber = serialNumber; }
     public Phone.Status getStatus() { return status; }
     public void setStatus(Phone.Status status) { this.status = status; }
+    public Phone.Condition getCondition() { return condition; }
+    public void setCondition(Phone.Condition condition) { this.condition = condition; }
+    public String getStorage() { return storage; }
+    public void setStorage(String storage) { this.storage = storage; }
+    public String getColor() { return color; }
+    public void setColor(String color) { this.color = color; }
+    public Double getPrice() { return price; }
+    public void setPrice(Double price) { this.price = price; }
     public Long getAssignedToId() { return assignedToId; }
     public void setAssignedToId(Long assignedToId) { this.assignedToId = assignedToId; }
     public String getAssignedToName() { return assignedToName; }

@@ -1,20 +1,20 @@
 package com.telephonemanager.service;
 
-import com.telephonemanager.dto.SimCardDto;
-import com.telephonemanager.entity.SimCard;
-import com.telephonemanager.entity.User;
-import com.telephonemanager.repository.SimCardRepository;
-import com.telephonemanager.repository.UserRepository;
-import com.telephonemanager.service.AssignmentHistoryService;
-import com.telephonemanager.entity.AssignmentHistory;
+import java.time.LocalDate;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.Optional;
+import com.telephonemanager.dto.SimCardDto;
+import com.telephonemanager.entity.AssignmentHistory;
+import com.telephonemanager.entity.SimCard;
+import com.telephonemanager.entity.User;
+import com.telephonemanager.repository.SimCardRepository;
+import com.telephonemanager.repository.UserRepository;
 
 @Service
 public class SimCardService {
@@ -50,6 +50,11 @@ public class SimCardService {
         sim.setPin(dto.getPin());
         sim.setPuk(dto.getPuk());
         sim.setPoke(dto.getPoke());
+        sim.setCarrier(dto.getCarrier());
+        sim.setPlan(dto.getPlan());
+        sim.setMonthlyFee(dto.getMonthlyFee());
+        sim.setDataLimit(dto.getDataLimit());
+        sim.setExpiryDate(dto.getExpiryDate());
         if (dto.getAssignedToId() != null) {
             User user = userRepository.findById(dto.getAssignedToId())
                 .orElseThrow(() -> new RuntimeException("Assigned user not found"));
@@ -97,6 +102,11 @@ public class SimCardService {
         sim.setPin(dto.getPin());
         sim.setPuk(dto.getPuk());
         sim.setPoke(dto.getPoke());
+        sim.setCarrier(dto.getCarrier());
+        sim.setPlan(dto.getPlan());
+        sim.setMonthlyFee(dto.getMonthlyFee());
+        sim.setDataLimit(dto.getDataLimit());
+        sim.setExpiryDate(dto.getExpiryDate());
         if (newUserId != null) {
             User user = userRepository.findById(newUserId)
                 .orElseThrow(() -> new RuntimeException("Assigned user not found"));

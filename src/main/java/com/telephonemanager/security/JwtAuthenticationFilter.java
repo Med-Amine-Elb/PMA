@@ -34,8 +34,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                   HttpServletResponse response, 
                                   FilterChain filterChain) throws ServletException, IOException {
         
-        // Skip JWT processing for login endpoint
-        if (request.getRequestURI().equals("/api/auth/login")) {
+        // Skip JWT processing for login endpoint and WebSocket endpoints
+        if (request.getRequestURI().equals("/api/auth/login") || 
+            request.getRequestURI().startsWith("/api/ws")) {
             filterChain.doFilter(request, response);
             return;
         }

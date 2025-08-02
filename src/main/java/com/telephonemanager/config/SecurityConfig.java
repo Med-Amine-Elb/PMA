@@ -46,6 +46,7 @@ public class SecurityConfig {
                 "/api/v3/api-docs/**"
             ).permitAll()
             .requestMatchers("/h2-console/**").permitAll()
+            .requestMatchers("/api/ws/**").permitAll()
             .requestMatchers("/api/users/**").authenticated()
             .requestMatchers("/api/simcards/**").authenticated()
             .requestMatchers("/api/phones/**").authenticated()

@@ -1,7 +1,16 @@
 package com.telephonemanager.entity;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class SimCard {
@@ -36,6 +45,22 @@ public class SimCard {
     @Column(nullable = false)
     private String poke;
 
+    // New fields for frontend compatibility
+    @Column
+    private String carrier;
+
+    @Column(name = "[plan]")
+    private String plan;
+
+    @Column
+    private Double monthlyFee;
+
+    @Column
+    private String dataLimit;
+
+    @Column
+    private LocalDate expiryDate;
+
     public enum Status {
         AVAILABLE,
         ASSIGNED,
@@ -64,4 +89,16 @@ public class SimCard {
     public void setPuk(String puk) { this.puk = puk; }
     public String getPoke() { return poke; }
     public void setPoke(String poke) { this.poke = poke; }
+    
+    // New getters and setters
+    public String getCarrier() { return carrier; }
+    public void setCarrier(String carrier) { this.carrier = carrier; }
+    public String getPlan() { return plan; }
+    public void setPlan(String plan) { this.plan = plan; }
+    public Double getMonthlyFee() { return monthlyFee; }
+    public void setMonthlyFee(Double monthlyFee) { this.monthlyFee = monthlyFee; }
+    public String getDataLimit() { return dataLimit; }
+    public void setDataLimit(String dataLimit) { this.dataLimit = dataLimit; }
+    public LocalDate getExpiryDate() { return expiryDate; }
+    public void setExpiryDate(LocalDate expiryDate) { this.expiryDate = expiryDate; }
 } 

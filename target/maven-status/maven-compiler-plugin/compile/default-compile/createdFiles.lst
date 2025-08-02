@@ -1,5 +1,6 @@
 com\telephonemanager\dto\AssignmentHistoryDto.class
 com\telephonemanager\repository\SystemSettingsRepository.class
+com\telephonemanager\entity\Phone$Condition.class
 com\telephonemanager\service\ConversationService.class
 com\telephonemanager\entity\User$UserStatus.class
 com\telephonemanager\entity\CalendarEvent$EventStatus.class
@@ -16,6 +17,7 @@ com\telephonemanager\controller\ExportController.class
 com\telephonemanager\dto\LoginResponse$LoginData.class
 com\telephonemanager\dto\LoginResponse.class
 com\telephonemanager\controller\AttributionController.class
+com\telephonemanager\controller\WebSocketMessageController.class
 com\telephonemanager\config\SecurityConfig.class
 com\telephonemanager\controller\AssignmentHistoryController.class
 com\telephonemanager\dto\ConversationDto.class
@@ -75,6 +77,7 @@ com\telephonemanager\controller\UserController.class
 com\telephonemanager\dto\UserSettingsDto.class
 com\telephonemanager\controller\AuditLogController.class
 com\telephonemanager\entity\Phone$Status.class
+com\telephonemanager\config\DatabaseMigration.class
 com\telephonemanager\dto\RequestDto.class
 com\telephonemanager\dto\FileUploadDto.class
 com\telephonemanager\repository\FileUploadRepository.class
