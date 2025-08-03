@@ -44,18 +44,12 @@
    - Event management (CRUD)
    - Calendar view
 
-7. **Messages/Conversations**
-   - Conversation management
-   - Message sending/receiving
-   - Read status tracking
-   - Message starring
-
-8. **Profile Management**
+7. **Profile Management**
    - Personal information editing
    - Recent activity tracking
    - Profile settings
 
-9. **Settings**
+8. **Settings**
    - System preferences
    - Notification settings
    - Security settings
@@ -93,11 +87,7 @@
    - Event management
    - Calendar view
 
-7. **Messages/Conversations**
-   - Conversation management
-   - Message handling
-
-8. **Profile & Settings**
+7. **Profile & Settings**
    - Profile management
    - Settings configuration
 

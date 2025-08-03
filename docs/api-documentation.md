@@ -9,13 +9,12 @@
 6. [Request Management](#request-management)
 7. [Notification Management](#notification-management)
 8. [Calendar/Events Management](#calendar-events-management)
-9. [Messages Management](#messages-management)
-10. [Dashboard Analytics](#dashboard-analytics)
-11. [Settings Management](#settings-management)
-12. [File Upload](#file-upload)
-13. [Data Export](#data-export)
-14. [Bulk Operations](#bulk-operations)
-15. [System Management](#system-management)
+9. [Dashboard Analytics](#dashboard-analytics)
+10. [Settings Management](#settings-management)
+11. [File Upload](#file-upload)
+12. [Data Export](#data-export)
+13. [Bulk Operations](#bulk-operations)
+14. [System Management](#system-management)
 
 ---
 
@@ -717,85 +716,6 @@
 
 ### DELETE /api/events/:id
 **Description**: Delete event
-
----
-
-## Messages Management
-
-### GET /api/conversations
-**Description**: Get user conversations
-**Headers**: `Authorization: Bearer <token>`
-**Response**:
-\`\`\`json
-{
-  "success": true,
-  "data": [
-    {
-      "id": "conv_id",
-      "participantId": "user_id",
-      "participantName": "Jean Dupont",
-      "participantAvatar": "avatar_url",
-      "lastMessage": "Merci pour l'attribution du nouveau téléphone !",
-      "lastMessageTime": "2024-01-20T10:30:00Z",
-      "unreadCount": 2,
-      "isOnline": true
-    }
-  ]
-}
-\`\`\`
-
-### GET /api/conversations/:id/messages
-**Description**: Get messages in conversation
-**Query Parameters**:
-- `page`, `limit`
-
-**Response**:
-\`\`\`json
-{
-  "success": true,
-  "data": {
-    "messages": [
-      {
-        "id": "msg_id",
-        "conversationId": "conv_id",
-        "senderId": "user_id",
-        "senderName": "Jean Dupont",
-        "content": "Bonjour, j'ai reçu votre message concernant l'attribution",
-        "timestamp": "2024-01-20T10:25:00Z",
-        "read": true,
-        "starred": false
-      }
-    ],
-    "pagination": {
-      "page": 1,
-      "limit": 50,
-      "total": 100,
-      "totalPages": 2
-    }
-  }
-}
-\`\`\`
-
-### POST /api/conversations/:id/messages
-**Description**: Send message in conversation
-**Request Body**:
-\`\`\`json
-{
-  "content": "Merci pour l'attribution du nouveau téléphone !"
-}
-\`\`\`
-
-### PUT /api/messages/:id/read
-**Description**: Mark message as read
-
-### PUT /api/messages/:id/star
-**Description**: Star/unstar message
-**Request Body**:
-\`\`\`json
-{
-  "starred": true
-}
-\`\`\`
 
 ---
 

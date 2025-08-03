@@ -1,6 +1,7 @@
 package com.telephonemanager.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 public class ConversationDto {
@@ -12,14 +13,14 @@ public class ConversationDto {
     private Long createdById;
     private String createdByName;
     private Set<Long> participantIds;
-    private Set<String> participantNames;
+    private List<String> participantNames;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime lastMessageAt;
     private boolean isActive;
-    private int unreadCount;
     private String lastMessageContent;
     private String lastMessageSenderName;
+    private int unreadCount;
     
     // Constructors
     public ConversationDto() {}
@@ -81,11 +82,11 @@ public class ConversationDto {
         this.participantIds = participantIds;
     }
     
-    public Set<String> getParticipantNames() {
+    public List<String> getParticipantNames() {
         return participantNames;
     }
     
-    public void setParticipantNames(Set<String> participantNames) {
+    public void setParticipantNames(List<String> participantNames) {
         this.participantNames = participantNames;
     }
     
@@ -121,14 +122,6 @@ public class ConversationDto {
         isActive = active;
     }
     
-    public int getUnreadCount() {
-        return unreadCount;
-    }
-    
-    public void setUnreadCount(int unreadCount) {
-        this.unreadCount = unreadCount;
-    }
-    
     public String getLastMessageContent() {
         return lastMessageContent;
     }
@@ -143,5 +136,13 @@ public class ConversationDto {
     
     public void setLastMessageSenderName(String lastMessageSenderName) {
         this.lastMessageSenderName = lastMessageSenderName;
+    }
+    
+    public int getUnreadCount() {
+        return unreadCount;
+    }
+    
+    public void setUnreadCount(int unreadCount) {
+        this.unreadCount = unreadCount;
     }
 } 

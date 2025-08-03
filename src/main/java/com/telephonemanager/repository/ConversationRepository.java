@@ -8,41 +8,33 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ConversationRepository extends JpaRepository<Conversation, Long> {
     
-    // Find conversations where user is a participant
-    @Query("SELECT c FROM Conversation c JOIN c.participants p WHERE p.id = :userId AND c.isActive = true")
-    Page<Conversation> findByParticipantId(@Param("userId") Long userId, Pageable pageable);
+    @Query("SELECT DISTINCT c FROM Conversation c JOIN c.participants p WHERE p.id = :userId AND c.isActive = true ORDER BY c.lastMessageAt DESC NULLS LAST")
+    List<Conversation> findByParticipantsUserId(@Param("userId") Long userId);
     
-    // Find conversations by type
-    Page<Conversation> findByType(Conversation.ConversationType type, Pageable pageable);
+    @Query("SELECT c FROM Conversation c JOIN c.participants p WHERE c.id = :conversationId AND p.id = :userId AND c.isActive = true")
+    Optional<Conversation> findByIdAndParticipantsUserId(@Param("conversationId") Long conversationId, @Param("userId") Long userId);
     
-    // Find conversations created by user
-    Page<Conversation> findByCreatedBy(User createdBy, Pageable pageable);
+    @Query("SELECT c FROM Conversation c WHERE c.createdBy.id = :userId AND c.isActive = true ORDER BY c.createdAt DESC")
+    List<Conversation> findByCreatedById(@Param("userId") Long userId);
     
-    // Find direct conversation between two users
-    @Query("SELECT c FROM Conversation c JOIN c.participants p1 JOIN c.participants p2 " +
-           "WHERE c.type = 'DIRECT' AND p1.id = :userId1 AND p2.id = :userId2 AND c.isActive = true")
-    List<Conversation> findDirectConversationBetweenUsers(@Param("userId1") Long userId1, 
-                                                         @Param("userId2") Long userId2);
+    @Query("SELECT c FROM Conversation c WHERE c.type = 'DIRECT' AND c.isActive = true AND " +
+           "EXISTS (SELECT 1 FROM c.participants p1 WHERE p1.id = :userId1) AND " +
+           "EXISTS (SELECT 1 FROM c.participants p2 WHERE p2.id = :userId2)")
+    Optional<Conversation> findDirectConversationBetweenUsers(@Param("userId1") Long userId1, @Param("userId2") Long userId2);
     
-    // Find conversations by title containing
-    Page<Conversation> findByTitleContainingIgnoreCase(String title, Pageable pageable);
+    @Query("SELECT c FROM Conversation c WHERE c.title LIKE %:searchTerm% AND c.isActive = true")
+    Page<Conversation> findByTitleContaining(@Param("searchTerm") String searchTerm, Pageable pageable);
     
-    // Find active conversations
-    Page<Conversation> findByIsActiveTrue(Pageable pageable);
+    @Query("SELECT c FROM Conversation c WHERE c.type = :type AND c.isActive = true")
+    List<Conversation> findByType(@Param("type") String type);
     
-    // Find conversations with recent activity
-    @Query("SELECT c FROM Conversation c WHERE c.lastMessageAt IS NOT NULL ORDER BY c.lastMessageAt DESC")
-    Page<Conversation> findConversationsWithRecentActivity(Pageable pageable);
-    
-    // Find conversations where user is participant and has unread messages
-    @Query("SELECT DISTINCT c FROM Conversation c JOIN c.participants p " +
-           "WHERE p.id = :userId AND c.isActive = true AND EXISTS " +
-           "(SELECT m FROM Message m WHERE m.conversation = c AND :userId NOT IN " +
-           "(SELECT r.id FROM m.readBy r))")
-    List<Conversation> findConversationsWithUnreadMessages(@Param("userId") Long userId);
+    @Query("SELECT COUNT(c) FROM Conversation c JOIN c.participants p WHERE p.id = :userId AND c.isActive = true")
+    long countByParticipantsUserId(@Param("userId") Long userId);
 } 

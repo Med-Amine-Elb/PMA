@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -20,9 +19,6 @@ import java.util.List;
 public class NotificationService {
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
 
     public Map<String, Object> getUserNotifications(String userEmail, int page, int limit) {
         Map<String, Object> result = new HashMap<>();
@@ -62,19 +58,11 @@ public class NotificationService {
     }
 
     public void sendNotificationToUser(String title, String message, String type, Long userId) {
-        Map<String, Object> notification = Map.of(
-            "event", "notification:new",
-            "data", Map.of(
-                "title", title,
-                "message", message,
-                "type", type
-            )
-        );
         if (userId != null) {
             Optional<User> user = userRepository.findById(userId);
             if (user.isPresent()) {
                 System.out.println("[NOTIFY] Sent to user " + user.get().getName() + " (ID: " + userId + "): " + title + " - " + message);
-                messagingTemplate.convertAndSend("/queue/notifications/" + userId, notification);
+                // Note: WebSocket functionality removed - notifications are now logged only
             } else {
                 System.err.println("[NOTIFY][ERROR] User ID " + userId + " not found. Notification not sent.");
             }

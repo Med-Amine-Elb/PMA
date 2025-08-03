@@ -2314,6 +2314,150 @@
 					"description": "User requests maintenance for phone with ID 1. Replace '1' with the desired phone ID."
 				}
 			]
+		},
+		{
+			"name": "Chat (Real-Time)",
+			"item": [
+				{
+					"name": "Get My Conversations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/chat/conversations",
+							"host": ["{{baseUrl}}"],
+							"path": ["chat", "conversations"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Conversation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Test Conversation\",\n  \"type\": \"DIRECT\",\n  \"participantIds\": [2]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/chat/conversations",
+							"host": ["{{baseUrl}}"],
+							"path": ["chat", "conversations"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Conversation Messages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/chat/conversations/1/messages",
+							"host": ["{{baseUrl}}"],
+							"path": ["chat", "conversations", "1", "messages"]
+						}
+					},
+					"response": [],
+					"description": "Replace 1 with your conversation ID."
+				},
+				{
+					"name": "Send Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"conversationId\": 1,\n  \"content\": \"Hello from Postman!\",\n  \"type\": \"TEXT\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/chat/messages",
+							"host": ["{{baseUrl}}"],
+							"path": ["chat", "messages"]
+						}
+					},
+					"response": [],
+					"description": "Replace conversationId with your conversation ID."
+				},
+				{
+					"name": "Mark Message as Read",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/chat/messages/1/read",
+							"host": ["{{baseUrl}}"],
+							"path": ["chat", "messages", "1", "read"]
+						}
+					},
+					"response": [],
+					"description": "Replace 1 with your message ID."
+				},
+				{
+					"name": "Mark All Messages as Read in Conversation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/chat/conversations/1/read",
+							"host": ["{{baseUrl}}"],
+							"path": ["chat", "conversations", "1", "read"]
+						}
+					},
+					"response": [],
+					"description": "Replace 1 with your conversation ID."
+				},
+				{
+					"name": "Get Unread Message Count",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/chat/conversations/1/unread-count",
+							"host": ["{{baseUrl}}"],
+							"path": ["chat", "conversations", "1", "unread-count"]
+						}
+					},
+					"response": [],
+					"description": "Replace 1 with your conversation ID."
+				},
+				{
+					"name": "Get New Messages Since Last Message ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{authToken}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/chat/conversations/1/messages/new?lastMessageId=5",
+							"host": ["{{baseUrl}}"],
+							"path": ["chat", "conversations", "1", "messages", "new"],
+							"query": [
+								{ "key": "lastMessageId", "value": "5" }
+							]
+						}
+					},
+					"response": [],
+					"description": "Replace 1 with your conversation ID and 5 with your last message ID."
+				}
+			]
 		}
 	],
 	"event": [
