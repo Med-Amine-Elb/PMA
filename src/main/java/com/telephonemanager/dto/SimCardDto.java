@@ -23,14 +23,16 @@ public class SimCardDto {
     private String pin;
     @NotBlank
     private String puk;
-    @NotBlank
-    private String poke;
+    private String poke; // Made optional since frontend doesn't send it
     
     // New fields for frontend compatibility
+    @NotBlank
     private String carrier;
+    @NotBlank
     private String plan;
     private Double monthlyFee;
     private String dataLimit;
+    private LocalDate activationDate; // Added missing field
     private LocalDate expiryDate;
 
     public SimCardDto() {}
@@ -52,6 +54,7 @@ public class SimCardDto {
         this.plan = sim.getPlan();
         this.monthlyFee = sim.getMonthlyFee();
         this.dataLimit = sim.getDataLimit();
+        this.activationDate = sim.getActivationDate();
         this.expiryDate = sim.getExpiryDate();
     }
     // Getters and setters
@@ -87,6 +90,8 @@ public class SimCardDto {
     public void setMonthlyFee(Double monthlyFee) { this.monthlyFee = monthlyFee; }
     public String getDataLimit() { return dataLimit; }
     public void setDataLimit(String dataLimit) { this.dataLimit = dataLimit; }
+    public LocalDate getActivationDate() { return activationDate; }
+    public void setActivationDate(LocalDate activationDate) { this.activationDate = activationDate; }
     public LocalDate getExpiryDate() { return expiryDate; }
     public void setExpiryDate(LocalDate expiryDate) { this.expiryDate = expiryDate; }
 } 

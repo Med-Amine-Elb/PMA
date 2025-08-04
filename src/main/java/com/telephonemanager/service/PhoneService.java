@@ -45,6 +45,13 @@ public class PhoneService {
         phone.setImei(dto.getImei());
         phone.setStatus(dto.getStatus());
         phone.setNotes(dto.getNotes());
+        // Add missing fields
+        phone.setSerialNumber(dto.getSerialNumber());
+        phone.setStorage(dto.getStorage());
+        phone.setColor(dto.getColor());
+        phone.setPrice(dto.getPrice());
+        phone.setCondition(dto.getCondition());
+        phone.setPurchaseDate(dto.getPurchaseDate());
         if (dto.getAssignedToId() != null) {
             User user = userRepository.findById(dto.getAssignedToId())
                 .orElseThrow(() -> new RuntimeException("Assigned user not found"));
@@ -87,6 +94,13 @@ public class PhoneService {
         phone.setImei(dto.getImei());
         phone.setStatus(dto.getStatus());
         phone.setNotes(dto.getNotes());
+        // Add missing fields
+        phone.setSerialNumber(dto.getSerialNumber());
+        phone.setStorage(dto.getStorage());
+        phone.setColor(dto.getColor());
+        phone.setPrice(dto.getPrice());
+        phone.setCondition(dto.getCondition());
+        phone.setPurchaseDate(dto.getPurchaseDate());
         if (newUserId != null) {
             User user = userRepository.findById(newUserId)
                 .orElseThrow(() -> new RuntimeException("Assigned user not found"));

@@ -107,9 +107,22 @@ public class AttributionController {
     public ResponseEntity<Map<String, Object>> createAttribution(
             @Valid @RequestBody AttributionDto attributionDto,
             Authentication authentication) {
+        System.out.println("=== ATTRIBUTION CONTROLLER: Create attribution request received");
+        System.out.println("=== ATTRIBUTION CONTROLLER: Authentication: " + authentication);
+        if (authentication != null) {
+            System.out.println("=== ATTRIBUTION CONTROLLER: Principal: " + authentication.getName());
+            System.out.println("=== ATTRIBUTION CONTROLLER: Authorities: " + authentication.getAuthorities());
+            System.out.println("=== ATTRIBUTION CONTROLLER: Is authenticated: " + authentication.isAuthenticated());
+        }
+        System.out.println("=== ATTRIBUTION CONTROLLER: Attribution data: " + attributionDto);
+        System.out.println("=== ATTRIBUTION CONTROLLER: UserId: " + attributionDto.getUserId());
+        System.out.println("=== ATTRIBUTION CONTROLLER: PhoneId: " + attributionDto.getPhoneId());
+        System.out.println("=== ATTRIBUTION CONTROLLER: SimCardId: " + attributionDto.getSimCardId());
+        System.out.println("=== ATTRIBUTION CONTROLLER: Status: " + attributionDto.getStatus());
         try {
             // Get current user ID
             Long assignedById = authService.getUserIdByEmail(authentication.getName());
+            System.out.println("=== ATTRIBUTION CONTROLLER: AssignedById: " + assignedById);
             
             AttributionDto createdAttribution = attributionService.createAttribution(attributionDto, assignedById);
             
@@ -120,6 +133,8 @@ public class AttributionController {
             
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
+            System.out.println("=== ATTRIBUTION CONTROLLER: Error creating attribution: " + e.getMessage());
+            e.printStackTrace();
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("error", Map.of(
@@ -136,6 +151,11 @@ public class AttributionController {
     public ResponseEntity<Map<String, Object>> updateAttribution(
             @PathVariable Long id,
             @Valid @RequestBody AttributionDto attributionDto) {
+        System.out.println("=== ATTRIBUTION CONTROLLER: Update attribution request received");
+        System.out.println("=== ATTRIBUTION CONTROLLER: Attribution ID: " + id);
+        System.out.println("=== ATTRIBUTION CONTROLLER: Attribution data: " + attributionDto);
+        System.out.println("=== ATTRIBUTION CONTROLLER: Status: " + attributionDto.getStatus());
+        System.out.println("=== ATTRIBUTION CONTROLLER: Notes: " + attributionDto.getNotes());
         try {
             AttributionDto updatedAttribution = attributionService.updateAttribution(id, attributionDto);
             

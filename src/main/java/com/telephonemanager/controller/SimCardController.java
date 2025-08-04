@@ -107,7 +107,15 @@ public class SimCardController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Create new SIM card", description = "Create a new SIM card (Admin only)")
-    public ResponseEntity<Map<String, Object>> createSimCard(@Valid @RequestBody SimCardDto simCardDto) {
+    public ResponseEntity<Map<String, Object>> createSimCard(@Valid @RequestBody SimCardDto simCardDto, Authentication authentication) {
+        System.out.println("=== SIM CARD CONTROLLER: Create SIM card request received");
+        System.out.println("=== SIM CARD CONTROLLER: Authentication: " + authentication);
+        if (authentication != null) {
+            System.out.println("=== SIM CARD CONTROLLER: Principal: " + authentication.getName());
+            System.out.println("=== SIM CARD CONTROLLER: Authorities: " + authentication.getAuthorities());
+            System.out.println("=== SIM CARD CONTROLLER: Is authenticated: " + authentication.isAuthenticated());
+        }
+        System.out.println("=== SIM CARD CONTROLLER: SIM card data: " + simCardDto);
         try {
             SimCardDto createdSim = simCardService.createSimCard(simCardDto);
             Map<String, Object> response = new HashMap<>();
@@ -116,6 +124,8 @@ public class SimCardController {
             response.put("message", "SIM card created successfully");
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
+            System.out.println("=== SIM CARD CONTROLLER: Error creating SIM card: " + e.getMessage());
+            e.printStackTrace();
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("error", Map.of(

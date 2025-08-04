@@ -53,6 +53,9 @@ public class Phone {
 
     private LocalDate assignedDate;
 
+    @Column
+    private LocalDate purchaseDate;  // DATE D'ACHAT
+
     private String notes;
 
     public enum Status {
@@ -103,9 +106,12 @@ public class Phone {
     public User getAssignedTo() { return assignedTo; }
     public void setAssignedTo(User assignedTo) { this.assignedTo = assignedTo; }
     
-    public LocalDate getAssignedDate() { return assignedDate; }
+        public LocalDate getAssignedDate() { return assignedDate; }
     public void setAssignedDate(LocalDate assignedDate) { this.assignedDate = assignedDate; }
-    
+
+    public LocalDate getPurchaseDate() { return purchaseDate; }
+    public void setPurchaseDate(LocalDate purchaseDate) { this.purchaseDate = purchaseDate; }
+
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
 } 

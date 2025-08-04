@@ -145,13 +145,25 @@ public class AttributionService {
     }
 
     public AttributionDto updateAttribution(Long id, AttributionDto dto) {
+        System.out.println("=== ATTRIBUTION SERVICE: Update attribution called");
+        System.out.println("=== ATTRIBUTION SERVICE: ID: " + id);
+        System.out.println("=== ATTRIBUTION SERVICE: DTO status: " + dto.getStatus());
+        System.out.println("=== ATTRIBUTION SERVICE: DTO notes: " + dto.getNotes());
+        
         Attribution attribution = attributionRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Attribution not found"));
         
-        // Update notes only (other fields should not be modified after creation)
+        System.out.println("=== ATTRIBUTION SERVICE: Current status: " + attribution.getStatus());
+        
+        // Update notes and status (other fields should not be modified after creation)
         attribution.setNotes(dto.getNotes());
+        if (dto.getStatus() != null) {
+            attribution.setStatus(dto.getStatus());
+            System.out.println("=== ATTRIBUTION SERVICE: Status updated to: " + dto.getStatus());
+        }
         
         Attribution saved = attributionRepository.save(attribution);
+        System.out.println("=== ATTRIBUTION SERVICE: Saved status: " + saved.getStatus());
         return new AttributionDto(saved);
     }
 

@@ -38,7 +38,7 @@ public class AuthService {
         }
 
         if (user.getStatus() != User.UserStatus.ACTIVE) {
-            throw new RuntimeException("Account is inactive");
+            throw new RuntimeException("Votre compte a été désactivé. Veuillez contacter l'administrateur pour plus d'informations.");
         }
 
         // Update last login

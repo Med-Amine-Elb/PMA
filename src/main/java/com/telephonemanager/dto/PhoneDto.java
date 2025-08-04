@@ -25,7 +25,9 @@ public class PhoneDto {
     private Double price;
     private Long assignedToId;
     private String assignedToName;
+    private String assignedToDepartment;
     private LocalDate assignedDate;
+    private LocalDate purchaseDate;
     private String notes;
 
     public PhoneDto() {}
@@ -43,8 +45,10 @@ public class PhoneDto {
         if (phone.getAssignedTo() != null) {
             this.assignedToId = phone.getAssignedTo().getId();
             this.assignedToName = phone.getAssignedTo().getName();
+            this.assignedToDepartment = phone.getAssignedTo().getDepartment();
         }
         this.assignedDate = phone.getAssignedDate();
+        this.purchaseDate = phone.getPurchaseDate();
         this.notes = phone.getNotes();
     }
     // Getters and setters
@@ -72,8 +76,12 @@ public class PhoneDto {
     public void setAssignedToId(Long assignedToId) { this.assignedToId = assignedToId; }
     public String getAssignedToName() { return assignedToName; }
     public void setAssignedToName(String assignedToName) { this.assignedToName = assignedToName; }
+    public String getAssignedToDepartment() { return assignedToDepartment; }
+    public void setAssignedToDepartment(String assignedToDepartment) { this.assignedToDepartment = assignedToDepartment; }
     public LocalDate getAssignedDate() { return assignedDate; }
     public void setAssignedDate(LocalDate assignedDate) { this.assignedDate = assignedDate; }
+    public LocalDate getPurchaseDate() { return purchaseDate; }
+    public void setPurchaseDate(LocalDate purchaseDate) { this.purchaseDate = purchaseDate; }
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
 } 

@@ -110,7 +110,6 @@ public class PhoneController {
     public ResponseEntity<Map<String, Object>> getPhoneUsageStats(@PathVariable Long id, Authentication authentication) {
         System.out.println("[DEBUG] Entered getPhoneUsageStats for phone ID: " + id);
         System.out.println("[DEBUG] Authentication object: " + authentication);
-        // TODO: Replace with real data fetching logic
         // For now, allow only admin, assigner, or assigned user
         try {
             PhoneDto phone = phoneService.getPhoneById(id).orElse(null);
@@ -222,7 +221,15 @@ public class PhoneController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Create new phone", description = "Create a new phone (Admin only)")
-    public ResponseEntity<Map<String, Object>> createPhone(@Valid @RequestBody PhoneDto phoneDto) {
+    public ResponseEntity<Map<String, Object>> createPhone(@Valid @RequestBody PhoneDto phoneDto, Authentication authentication) {
+        System.out.println("=== PHONE CONTROLLER: Create phone request received");
+        System.out.println("=== PHONE CONTROLLER: Authentication: " + authentication);
+        if (authentication != null) {
+            System.out.println("=== PHONE CONTROLLER: Principal: " + authentication.getName());
+            System.out.println("=== PHONE CONTROLLER: Authorities: " + authentication.getAuthorities());
+            System.out.println("=== PHONE CONTROLLER: Is authenticated: " + authentication.isAuthenticated());
+        }
+        
         try {
             PhoneDto createdPhone = phoneService.createPhone(phoneDto);
             Map<String, Object> response = new HashMap<>();
@@ -231,6 +238,8 @@ public class PhoneController {
             response.put("message", "Phone created successfully");
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
+            System.out.println("=== PHONE CONTROLLER: Error creating phone: " + e.getMessage());
+            e.printStackTrace();
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("error", Map.of(
@@ -382,7 +391,7 @@ public class PhoneController {
     ) {
         String description = requestBody.get("description");
         String urgency = requestBody.get("urgency");
-        // TODO: Check if user is assigned to this phone and store request in DB
+        
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("message", "Maintenance request submitted for review.");

@@ -59,6 +59,9 @@ public class SimCard {
     private String dataLimit;
 
     @Column
+    private LocalDate activationDate;
+
+    @Column
     private LocalDate expiryDate;
 
     public enum Status {
@@ -99,6 +102,8 @@ public class SimCard {
     public void setMonthlyFee(Double monthlyFee) { this.monthlyFee = monthlyFee; }
     public String getDataLimit() { return dataLimit; }
     public void setDataLimit(String dataLimit) { this.dataLimit = dataLimit; }
+    public LocalDate getActivationDate() { return activationDate; }
+    public void setActivationDate(LocalDate activationDate) { this.activationDate = activationDate; }
     public LocalDate getExpiryDate() { return expiryDate; }
     public void setExpiryDate(LocalDate expiryDate) { this.expiryDate = expiryDate; }
 } 

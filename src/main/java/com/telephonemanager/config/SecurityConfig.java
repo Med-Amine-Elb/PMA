@@ -31,6 +31,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        System.out.println("=== SECURITY CONFIG: Building filter chain ===");
+        
         http
             .cors().configurationSource(corsConfigurationSource())
             .and()
@@ -39,30 +41,28 @@ public class SecurityConfig {
             .and()
             .authorizeHttpRequests()
             .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+            .requestMatchers("/auth/login").permitAll()
             .requestMatchers(
                 "/swagger-ui.html",
                 "/swagger-ui/**",
                 "/v3/api-docs",
-                "/v3/api-docs/**",
-                "/api/swagger-ui.html",
-                "/api/swagger-ui/**",
-                "/api/v3/api-docs",
-                "/api/v3/api-docs/**"
+                "/v3/api-docs/**"
             ).permitAll()
             .requestMatchers("/h2-console/**").permitAll()
             .requestMatchers("/api/ws/**").permitAll()
-            .requestMatchers("/api/users/**").authenticated()
-            .requestMatchers("/api/simcards/**").authenticated()
-            .requestMatchers("/api/phones/**").authenticated()
-            .requestMatchers("/api/notifications/**").authenticated()
-            .requestMatchers("/api/conversations/**").authenticated()
-            .requestMatchers("/api/messages/**").authenticated()
-            .requestMatchers("/conversations/**").authenticated()
-            .requestMatchers("/api/chat/**").authenticated()
+            .requestMatchers("/api/test/**").permitAll()
+            .requestMatchers("/api/simple-test/**").permitAll()
+            .requestMatchers("/users/**").authenticated()
+            .requestMatchers("/simcards/**").authenticated()
+            .requestMatchers("/phones/**").authenticated()
+            .requestMatchers("/notifications/**").authenticated()
+            .requestMatchers("/chat/**").authenticated()
             .anyRequest().authenticated()
             .and()
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        
+        System.out.println("=== SECURITY CONFIG: Filter chain built successfully ===");
+        System.out.println("Permitted paths: /auth/login, /api/ws/**, /api/test/**, /api/simple-test/**");
         
         return http.build();
     }

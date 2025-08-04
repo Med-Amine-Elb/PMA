@@ -54,6 +54,7 @@ public class SimCardService {
         sim.setPlan(dto.getPlan());
         sim.setMonthlyFee(dto.getMonthlyFee());
         sim.setDataLimit(dto.getDataLimit());
+        sim.setActivationDate(dto.getActivationDate());
         sim.setExpiryDate(dto.getExpiryDate());
         if (dto.getAssignedToId() != null) {
             User user = userRepository.findById(dto.getAssignedToId())
@@ -106,6 +107,7 @@ public class SimCardService {
         sim.setPlan(dto.getPlan());
         sim.setMonthlyFee(dto.getMonthlyFee());
         sim.setDataLimit(dto.getDataLimit());
+        sim.setActivationDate(dto.getActivationDate());
         sim.setExpiryDate(dto.getExpiryDate());
         if (newUserId != null) {
             User user = userRepository.findById(newUserId)
