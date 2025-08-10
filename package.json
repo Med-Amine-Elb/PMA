@@ -1,0 +1,29 @@
+{
+  "name": "pma",
+  "version": "1.0.0",
+  "description": "[![Java](https://img.shields.io/badge/Java-17%2B-blue.svg)](https://www.oracle.com/java/)\r [![Maven](https://img.shields.io/badge/Maven-3.6%2B-brightgreen.svg)](https://maven.apache.org/)\r [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
+  "main": "websocket-test.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Med-Amine-Elb/PMA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Med-Amine-Elb/PMA/issues"
+  },
+  "homepage": "https://github.com/Med-Amine-Elb/PMA#readme",
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "sockjs-client": "^1.6.1",
+    "ws": "^8.18.3"
+  }
+}

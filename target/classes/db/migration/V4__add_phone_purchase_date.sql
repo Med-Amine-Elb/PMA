@@ -1,0 +1,1 @@
+ALTER TABLE phone ADD COLUMN purchase_date DATE; 
