@@ -34,6 +34,7 @@ com\telephonemanager\config\SecurityConfig.class
 com\telephonemanager\controller\AssignmentHistoryController.class
 com\telephonemanager\service\AttributionService.class
 com\telephonemanager\controller\UserController.class
+com\telephonemanager\controller\UserDashboardController.class
 com\telephonemanager\dto\UserSettingsDto.class
 com\telephonemanager\controller\AuditLogController.class
 com\telephonemanager\service\DashboardService.class
@@ -69,6 +70,7 @@ com\telephonemanager\entity\Phone.class
 com\telephonemanager\entity\UserSettings.class
 com\telephonemanager\entity\FileUpload$UploadType.class
 com\telephonemanager\security\JwtAuthenticationFilter.class
+com\telephonemanager\controller\UserDashboardController$1.class
 com\telephonemanager\dto\AttributionDto.class
 com\telephonemanager\repository\CalendarEventRepository.class
 com\telephonemanager\controller\NotificationController.class

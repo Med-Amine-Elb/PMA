@@ -69,6 +69,11 @@ public class AuthController {
             userData.put("avatar", user.getAvatar());
             userData.put("joinDate", user.getJoinDate());
             userData.put("lastLogin", user.getLastLogin());
+            // Extra fields for profile page
+            userData.put("phone", user.getPhone());
+            userData.put("address", user.getAddress());
+            userData.put("manager", user.getManager());
+            userData.put("position", user.getPosition());
 
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
