@@ -15,5 +15,6 @@ public interface AssignmentHistoryRepository extends JpaRepository<AssignmentHis
     
     // Dashboard methods
     long countByDateAfter(LocalDateTime date);
+    long countByDateBetweenAndAction(LocalDateTime startDate, LocalDateTime endDate, AssignmentHistory.Action action);
     List<AssignmentHistory> findTop10ByOrderByDateDesc();
 } 

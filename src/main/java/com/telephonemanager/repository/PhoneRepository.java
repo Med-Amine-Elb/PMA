@@ -34,4 +34,6 @@ public interface PhoneRepository extends JpaRepository<Phone, Long> {
     List<Object[]> findBrandDistribution();
     
     List<Phone> findByStatusAndAssignedDateBefore(Status status, LocalDate date);
+    
+    // Department-based queries - will be implemented when relationships are established
 } 

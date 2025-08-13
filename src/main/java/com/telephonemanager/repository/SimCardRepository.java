@@ -31,4 +31,6 @@ public interface SimCardRepository extends JpaRepository<SimCard, Long> {
     long countByAssignedToIsNotNull();
     long countByStatus(Status status);
     List<SimCard> findByStatusAndAssignedDateBefore(Status status, LocalDate date);
+    
+    // Department-based queries - will be implemented when relationships are established
 } 

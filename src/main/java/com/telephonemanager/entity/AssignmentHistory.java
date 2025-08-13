@@ -32,7 +32,7 @@ public class AssignmentHistory {
         PHONE, SIM
     }
     public enum Action {
-        ASSIGN, UNASSIGN, TRANSFER
+        ASSIGN, UNASSIGN, TRANSFER, RETURN
     }
 
     // Getters and setters

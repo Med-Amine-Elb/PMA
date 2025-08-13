@@ -51,4 +51,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // Dashboard methods
     @Query("SELECT u.department, COUNT(u) FROM User u GROUP BY u.department")
     List<Object[]> findDepartmentDistribution();
+    
+    // Assignment-based queries - using phone and sim card repositories instead
+    // These will be implemented in the service layer
 } 
