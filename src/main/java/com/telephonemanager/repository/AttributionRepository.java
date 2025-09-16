@@ -5,12 +5,14 @@ import com.telephonemanager.entity.Attribution.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
 
 @Repository
 public interface AttributionRepository extends JpaRepository<Attribution, Long> {
@@ -69,4 +71,15 @@ public interface AttributionRepository extends JpaRepository<Attribution, Long> 
     // Find attribution history for a phone
     @Query("SELECT a FROM Attribution a WHERE a.phone.id = :phoneId ORDER BY a.assignmentDate DESC")
     List<Attribution> findHistoryByPhoneId(@Param("phoneId") Long phoneId);
+
+    // Direct field update to ensure persistence of date/status/notes
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query("UPDATE Attribution a SET a.assignmentDate = :assignmentDate, a.returnDate = :returnDate, a.status = :status, a.notes = :notes WHERE a.id = :id")
+    int updateCoreFields(
+        @Param("id") Long id,
+        @Param("assignmentDate") LocalDate assignmentDate,
+        @Param("returnDate") LocalDate returnDate,
+        @Param("status") Status status,
+        @Param("notes") String notes
+    );
 } 

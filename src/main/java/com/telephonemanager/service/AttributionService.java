@@ -149,20 +149,52 @@ public class AttributionService {
         System.out.println("=== ATTRIBUTION SERVICE: ID: " + id);
         System.out.println("=== ATTRIBUTION SERVICE: DTO status: " + dto.getStatus());
         System.out.println("=== ATTRIBUTION SERVICE: DTO notes: " + dto.getNotes());
+        System.out.println("=== ATTRIBUTION SERVICE: DTO assignmentDate: " + dto.getAssignmentDate());
+        System.out.println("=== ATTRIBUTION SERVICE: DTO returnDate: " + dto.getReturnDate());
         
         Attribution attribution = attributionRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Attribution not found"));
         
         System.out.println("=== ATTRIBUTION SERVICE: Current status: " + attribution.getStatus());
         
-        // Update notes and status (other fields should not be modified after creation)
+        // Update allowed fields: notes, status, assignmentDate, returnDate
         attribution.setNotes(dto.getNotes());
+
+        if (dto.getAssignmentDate() != null) {
+            attribution.setAssignmentDate(dto.getAssignmentDate());
+            System.out.println("=== ATTRIBUTION SERVICE: AssignmentDate updated to: " + dto.getAssignmentDate());
+        }
+
+        if (dto.getReturnDate() != null) {
+            attribution.setReturnDate(dto.getReturnDate());
+            System.out.println("=== ATTRIBUTION SERVICE: ReturnDate updated to: " + dto.getReturnDate());
+        }
+
         if (dto.getStatus() != null) {
             attribution.setStatus(dto.getStatus());
             System.out.println("=== ATTRIBUTION SERVICE: Status updated to: " + dto.getStatus());
+
+            // If marked as RETURNED and no returnDate provided, set today
+            if (dto.getStatus() == Status.RETURNED && attribution.getReturnDate() == null) {
+                attribution.setReturnDate(LocalDate.now());
+                System.out.println("=== ATTRIBUTION SERVICE: ReturnDate auto-set to today for RETURNED status");
+            }
+            // If status is ACTIVE and there is a returnDate, clear it
+            if (dto.getStatus() == Status.ACTIVE && attribution.getReturnDate() != null) {
+                attribution.setReturnDate(null);
+                System.out.println("=== ATTRIBUTION SERVICE: ReturnDate cleared for ACTIVE status");
+            }
         }
         
+        // Persist via repository save and enforce via direct update query (belt-and-suspenders)
         Attribution saved = attributionRepository.save(attribution);
+        attributionRepository.updateCoreFields(
+            saved.getId(),
+            saved.getAssignmentDate(),
+            saved.getReturnDate(),
+            saved.getStatus(),
+            saved.getNotes()
+        );
         System.out.println("=== ATTRIBUTION SERVICE: Saved status: " + saved.getStatus());
         return new AttributionDto(saved);
     }
