@@ -18,6 +18,8 @@ public class AttributionDto {
     private String simCardNumber;
     private Long assignedById;
     private String assignedByName;
+    private Long returnedById;
+    private String returnedByName;
     private LocalDate assignmentDate;
     private LocalDate returnDate;
     private Status status;
@@ -47,6 +49,10 @@ public class AttributionDto {
         
         this.assignedById = attribution.getAssignedBy().getId();
         this.assignedByName = attribution.getAssignedBy().getName();
+        if (attribution.getReturnedBy() != null) {
+            this.returnedById = attribution.getReturnedBy().getId();
+            this.returnedByName = attribution.getReturnedBy().getName();
+        }
         this.assignmentDate = attribution.getAssignmentDate();
         this.returnDate = attribution.getReturnDate();
         this.status = attribution.getStatus();

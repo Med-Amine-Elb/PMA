@@ -183,6 +183,7 @@ public class AttributionService {
             if (dto.getStatus() == Status.ACTIVE && attribution.getReturnDate() != null) {
                 attribution.setReturnDate(null);
                 System.out.println("=== ATTRIBUTION SERVICE: ReturnDate cleared for ACTIVE status");
+                attribution.setReturnedBy(null);
             }
         }
         
@@ -205,13 +206,13 @@ public class AttributionService {
         
         // Return equipment before deleting
         if (attribution.getStatus() == Status.ACTIVE) {
-            returnAttribution(id, "Attribution deleted");
+            returnAttribution(id, "Attribution deleted", null);
         }
         
         attributionRepository.deleteById(id);
     }
 
-    public AttributionDto returnAttribution(Long id, String notes) {
+    public AttributionDto returnAttribution(Long id, String notes, Long returnedById) {
         Attribution attribution = attributionRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Attribution not found"));
         
@@ -222,6 +223,11 @@ public class AttributionService {
         attribution.setStatus(Status.RETURNED);
         attribution.setReturnDate(LocalDate.now());
         attribution.setNotes(notes != null ? notes : attribution.getNotes());
+        if (returnedById != null) {
+            User returnedBy = userRepository.findById(returnedById)
+                .orElseThrow(() -> new RuntimeException("Returned-by user not found"));
+            attribution.setReturnedBy(returnedBy);
+        }
         
         Attribution saved = attributionRepository.save(attribution);
         

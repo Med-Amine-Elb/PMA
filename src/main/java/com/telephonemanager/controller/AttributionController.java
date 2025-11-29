@@ -1,7 +1,6 @@
 package com.telephonemanager.controller;
 
 import com.telephonemanager.dto.AttributionDto;
-import com.telephonemanager.entity.Attribution;
 import com.telephonemanager.entity.Attribution.Status;
 import com.telephonemanager.service.AttributionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -204,10 +203,12 @@ public class AttributionController {
     @Operation(summary = "Return attribution", description = "Mark attribution as returned (Admin/Assigner only)")
     public ResponseEntity<Map<String, Object>> returnAttribution(
             @PathVariable Long id,
-            @RequestBody(required = false) Map<String, String> request) {
+            @RequestBody(required = false) Map<String, String> request,
+            Authentication authentication) {
         try {
             String notes = request != null ? request.get("notes") : null;
-            AttributionDto returnedAttribution = attributionService.returnAttribution(id, notes);
+            Long actorId = authentication != null ? authService.getUserIdByEmail(authentication.getName()) : null;
+            AttributionDto returnedAttribution = attributionService.returnAttribution(id, notes, actorId);
             
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);

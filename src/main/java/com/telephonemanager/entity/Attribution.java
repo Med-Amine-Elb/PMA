@@ -27,6 +27,10 @@ public class Attribution {
     @JoinColumn(name = "assigned_by_id", nullable = false)
     private User assignedBy;
 
+    @ManyToOne
+    @JoinColumn(name = "returned_by_id")
+    private User returnedBy;
+
     @Column(name = "assignment_date", nullable = false)
     private LocalDate assignmentDate;
 
@@ -114,6 +118,14 @@ public class Attribution {
 
     public void setAssignedBy(User assignedBy) {
         this.assignedBy = assignedBy;
+    }
+
+    public User getReturnedBy() {
+        return returnedBy;
+    }
+
+    public void setReturnedBy(User returnedBy) {
+        this.returnedBy = returnedBy;
     }
 
     public LocalDate getAssignmentDate() {
