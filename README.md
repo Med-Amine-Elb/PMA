@@ -102,12 +102,6 @@ postman/
 
 ---
 
-## 📚 API Docs
-- [Swagger UI](http://localhost:8080/api/swagger-ui.html)
-- [OpenAPI Spec](http://localhost:8080/api/api-docs)
-
----
-
 ## 🤝 Contributing
 1. Fork & branch
 2. Implement changes
