@@ -41,7 +41,7 @@ public class Attribution {
     @Column(nullable = false)
     private Status status = Status.ACTIVE;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "NVARCHAR(MAX)")
     private String notes;
 
     @Column(name = "created_at", nullable = false)

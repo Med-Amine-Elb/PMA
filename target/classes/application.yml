@@ -3,9 +3,9 @@ spring:
     name: telephone-manager-backend
   
   datasource:
-    url: jdbc:sqlserver://KASAYKO\\SQLEXPRESS:1433;instanceName=SQLEXPRESS;databaseName=PhoneManagementDB;encrypt=true;trustServerCertificate=true;integratedSecurity=false
+    url: jdbc:sqlserver://localhost\\SQLEXPRESS:1433;instanceName=SQLEXPRESS;databaseName=PhoneManagementDB;encrypt=true;trustServerCertificate=true;integratedSecurity=false
     username: sa
-    password: hamid
+    password: SpringBoot@2026
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   
   jpa:
