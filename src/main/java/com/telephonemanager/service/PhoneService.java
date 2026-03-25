@@ -27,11 +27,37 @@ public class PhoneService {
     public Page<PhoneDto> getPhones(int page, int limit, Phone.Status status, String brand, String model) {
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<Phone> phones = phoneRepository.findPhonesWithFilters(status, brand, model, pageable);
-        return phones.map(PhoneDto::new);
+        return phones.map(this::convertToDto);
+    }
+
+    private PhoneDto convertToDto(Phone phone) {
+        PhoneDto dto = new PhoneDto(phone);
+        if (phone.getAssignedTo() != null && phone.getAssignedDate() != null) {
+            dto.setRemainingValue(calculateRemainingValue(phone));
+        }
+        return dto;
+    }
+
+    public Double calculateRemainingValue(Phone phone) {
+        if (phone.getPrice() == null || phone.getAssignedDate() == null) {
+            return phone.getPrice() != null ? phone.getPrice() : 0.0;
+        }
+
+        long monthsUsed = java.time.temporal.ChronoUnit.MONTHS.between(
+                phone.getAssignedDate().withDayOfMonth(1),
+                LocalDate.now().withDayOfMonth(1));
+
+        if (monthsUsed >= 24)
+            return 0.0;
+
+        double monthlyCost = phone.getPrice() / 24.0;
+        long monthsRemaining = 24 - monthsUsed;
+
+        return Math.round(monthsRemaining * monthlyCost * 100.0) / 100.0;
     }
 
     public Optional<PhoneDto> getPhoneById(Long id) {
-        return phoneRepository.findById(id).map(PhoneDto::new);
+        return phoneRepository.findById(id).map(this::convertToDto);
     }
 
     public PhoneDto createPhone(PhoneDto dto) {
@@ -136,7 +162,7 @@ public class PhoneService {
                     AssignmentHistory.Action.TRANSFER,
                     "Phone transferred");
         }
-        return new PhoneDto(updated);
+        return convertToDto(updated);
     }
 
     public void deletePhone(Long id) {
@@ -185,21 +211,24 @@ public class PhoneService {
             throw new RuntimeException("Phone is not assigned to any user");
         }
 
+        Double remainingValue = calculateRemainingValue(phone);
+
         Long oldUserId = phone.getAssignedTo().getId();
         phone.setAssignedTo(null);
         phone.setAssignedDate(null);
         Phone saved = phoneRepository.save(phone);
 
-        // Record unassignment history
+        // Record unassignment history with remaining value
         assignmentHistoryService.record(
                 AssignmentHistory.Type.PHONE,
                 saved.getId(),
                 oldUserId,
                 null,
                 AssignmentHistory.Action.UNASSIGN,
-                "Phone unassigned via explicit endpoint");
+                "Phone unassigned via explicit endpoint. Remaining value: " + remainingValue,
+                remainingValue);
 
-        return new PhoneDto(saved);
+        return convertToDto(saved);
     }
 
     public PhoneDto transferPhone(Long phoneId, Long newUserId) {

@@ -29,6 +29,7 @@ public class PhoneDto {
     private String assignedToDepartment;
     private LocalDate assignedDate;
     private LocalDate purchaseDate;
+    private Double remainingValue;
     private String notes;
 
     public PhoneDto() {
@@ -53,6 +54,7 @@ public class PhoneDto {
         }
         this.assignedDate = phone.getAssignedDate();
         this.purchaseDate = phone.getPurchaseDate();
+        // remainingValue is set manually in service
         this.notes = phone.getNotes();
     }
 
@@ -183,6 +185,14 @@ public class PhoneDto {
 
     public void setPurchaseDate(LocalDate purchaseDate) {
         this.purchaseDate = purchaseDate;
+    }
+
+    public Double getRemainingValue() {
+        return remainingValue;
+    }
+
+    public void setRemainingValue(Double remainingValue) {
+        this.remainingValue = remainingValue;
     }
 
     public String getNotes() {

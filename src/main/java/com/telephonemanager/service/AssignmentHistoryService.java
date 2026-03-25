@@ -18,6 +18,11 @@ public class AssignmentHistoryService {
     private AssignmentHistoryRepository historyRepository;
 
     public void record(Type type, Long itemId, Long fromUserId, Long toUserId, Action action, String notes) {
+        record(type, itemId, fromUserId, toUserId, action, notes, null);
+    }
+
+    public void record(Type type, Long itemId, Long fromUserId, Long toUserId, Action action, String notes,
+            Double remainingValue) {
         AssignmentHistory h = new AssignmentHistory();
         h.setType(type);
         h.setItemId(itemId);
@@ -26,6 +31,7 @@ public class AssignmentHistoryService {
         h.setAction(action);
         h.setDate(LocalDateTime.now());
         h.setNotes(notes);
+        h.setRemainingValue(remainingValue);
         historyRepository.save(h);
     }
 
@@ -43,4 +49,4 @@ public class AssignmentHistoryService {
         return historyRepository.findByToUserIdOrFromUserId(userId, userId)
                 .stream().map(AssignmentHistoryDto::new).collect(Collectors.toList());
     }
-} 
+}

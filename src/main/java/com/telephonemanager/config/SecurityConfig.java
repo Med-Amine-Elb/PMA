@@ -56,6 +56,7 @@ public class SecurityConfig {
                 .requestMatchers("/users/**").authenticated()
                 .requestMatchers("/simcards/**").authenticated()
                 .requestMatchers("/phones/**").authenticated()
+                .requestMatchers("/assignment-history/**").authenticated()
                 .requestMatchers("/notifications/**").authenticated()
                 .requestMatchers("/chat/**").authenticated()
                 .anyRequest().authenticated()
