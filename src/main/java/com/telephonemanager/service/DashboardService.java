@@ -268,13 +268,15 @@ public class DashboardService {
                     .withSecond(0);
             LocalDateTime monthEnd = monthStart.plusMonths(1).minusSeconds(1);
 
-            // Count attributions for this month
-            long attributions = assignmentHistoryRepository.countByDateBetweenAndAction(
-                    monthStart, monthEnd, AssignmentHistory.Action.ASSIGN);
+            // Count phone attributions (ASSIGN or TRANSFER)
+            long attributions = assignmentHistoryRepository.countByDateBetweenAndTypeAndActionIn(
+                    monthStart, monthEnd, AssignmentHistory.Type.PHONE,
+                    Arrays.asList(AssignmentHistory.Action.ASSIGN, AssignmentHistory.Action.TRANSFER));
 
-            // Count returns for this month
-            long returns = assignmentHistoryRepository.countByDateBetweenAndAction(
-                    monthStart, monthEnd, AssignmentHistory.Action.RETURN);
+            // Count phone returns (RETURN or UNASSIGN)
+            long returns = assignmentHistoryRepository.countByDateBetweenAndTypeAndActionIn(
+                    monthStart, monthEnd, AssignmentHistory.Type.PHONE,
+                    Arrays.asList(AssignmentHistory.Action.RETURN, AssignmentHistory.Action.UNASSIGN));
 
             Map<String, Object> monthData = new HashMap<>();
             monthData.put("month", monthNames[5 - i]);

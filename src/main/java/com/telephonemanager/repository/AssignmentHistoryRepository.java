@@ -11,10 +11,19 @@ import java.util.List;
 @Repository
 public interface AssignmentHistoryRepository extends JpaRepository<AssignmentHistory, Long> {
     List<AssignmentHistory> findByTypeAndItemId(Type type, Long itemId);
+
     List<AssignmentHistory> findByToUserIdOrFromUserId(Long toUserId, Long fromUserId);
-    
+
     // Dashboard methods
     long countByDateAfter(LocalDateTime date);
+
     long countByDateBetweenAndAction(LocalDateTime startDate, LocalDateTime endDate, AssignmentHistory.Action action);
+
+    long countByDateBetweenAndTypeAndActionIn(
+            LocalDateTime startDate,
+            LocalDateTime endDate,
+            AssignmentHistory.Type type,
+            java.util.Collection<AssignmentHistory.Action> actions);
+
     List<AssignmentHistory> findTop10ByOrderByDateDesc();
-} 
+}
