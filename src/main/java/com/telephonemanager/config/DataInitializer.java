@@ -4,6 +4,8 @@ import com.telephonemanager.entity.User;
 import com.telephonemanager.entity.Phone;
 import com.telephonemanager.repository.UserRepository;
 import com.telephonemanager.repository.PhoneRepository;
+import com.telephonemanager.repository.SimCardRepository;
+import com.telephonemanager.entity.SimCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,17 +23,20 @@ public class DataInitializer implements CommandLineRunner {
     private PhoneRepository phoneRepository;
 
     @Autowired
+    private SimCardRepository simCardRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
         System.out.println("=== DataInitializer starting ===");
-        
+
         try {
             // Check if database is accessible
             long userCount = userRepository.count();
             System.out.println("Current user count: " + userCount);
-            
+
             // Create test users if they don't exist
             if (userCount == 0) {
                 System.out.println("No users found, creating test users...");
@@ -40,11 +45,11 @@ public class DataInitializer implements CommandLineRunner {
             } else {
                 System.out.println("Users already exist, skipping creation.");
             }
-            
+
             // Create test phones if they don't exist
             long phoneCount = phoneRepository.count();
             System.out.println("Current phone count: " + phoneCount);
-            
+
             if (phoneCount == 0) {
                 System.out.println("No phones found, creating test phones...");
                 createTestPhones();
@@ -52,21 +57,34 @@ public class DataInitializer implements CommandLineRunner {
             } else {
                 System.out.println("Phones already exist, skipping creation.");
             }
-            
+
+            // Create test SIM cards if they don't exist
+            long simCount = simCardRepository.count();
+            System.out.println("Current SIM card count: " + simCount);
+
+            if (simCount == 0) {
+                System.out.println("No SIM cards found, creating test SIM cards...");
+                createTestSimCards();
+                System.out.println("Test SIM cards created successfully!");
+            } else {
+                System.out.println("SIM cards already exist, skipping creation.");
+            }
+
             // Verify data exists
             userRepository.findAll().forEach(user -> {
                 System.out.println("User: " + user.getEmail() + " (Role: " + user.getRole() + ")");
             });
-            
+
             phoneRepository.findAll().forEach(phone -> {
-                System.out.println("Phone: " + phone.getBrand() + " " + phone.getModel() + " (" + phone.getColor() + ")");
+                System.out
+                        .println("Phone: " + phone.getBrand() + " " + phone.getModel() + " (" + phone.getColor() + ")");
             });
-            
+
         } catch (Exception e) {
             System.err.println("Error in DataInitializer: " + e.getMessage());
             e.printStackTrace();
         }
-        
+
         System.out.println("=== DataInitializer completed ===");
     }
 
@@ -130,7 +148,7 @@ public class DataInitializer implements CommandLineRunner {
         Phone iphone1 = new Phone();
         iphone1.setBrand("Apple");
         iphone1.setModel("iPhone 15 Pro");
-        iphone1.setImei("123456789012345");
+        iphone1.setImei1("123456789012345");
         iphone1.setSerialNumber("APL123456789");
         iphone1.setStatus(Phone.Status.AVAILABLE);
         iphone1.setCondition(Phone.Condition.EXCELLENT);
@@ -144,7 +162,7 @@ public class DataInitializer implements CommandLineRunner {
         Phone iphone2 = new Phone();
         iphone2.setBrand("Apple");
         iphone2.setModel("iPhone 15 Pro");
-        iphone2.setImei("123456789012346");
+        iphone2.setImei1("123456789012346");
         iphone2.setSerialNumber("APL123456790");
         iphone2.setStatus(Phone.Status.AVAILABLE);
         iphone2.setCondition(Phone.Condition.EXCELLENT);
@@ -158,7 +176,7 @@ public class DataInitializer implements CommandLineRunner {
         Phone samsung1 = new Phone();
         samsung1.setBrand("Samsung");
         samsung1.setModel("Galaxy S21");
-        samsung1.setImei("123456789012347");
+        samsung1.setImei1("123456789012347");
         samsung1.setSerialNumber("SMS123456789");
         samsung1.setStatus(Phone.Status.AVAILABLE);
         samsung1.setCondition(Phone.Condition.GOOD);
@@ -172,7 +190,7 @@ public class DataInitializer implements CommandLineRunner {
         Phone samsung2 = new Phone();
         samsung2.setBrand("Samsung");
         samsung2.setModel("Galaxy S22");
-        samsung2.setImei("123456789012348");
+        samsung2.setImei1("123456789012348");
         samsung2.setSerialNumber("SMS123456790");
         samsung2.setStatus(Phone.Status.AVAILABLE);
         samsung2.setCondition(Phone.Condition.EXCELLENT);
@@ -186,7 +204,7 @@ public class DataInitializer implements CommandLineRunner {
         Phone samsung3 = new Phone();
         samsung3.setBrand("Samsung");
         samsung3.setModel("Galaxy S22");
-        samsung3.setImei("123456789012349");
+        samsung3.setImei1("123456789012349");
         samsung3.setSerialNumber("SMS123456791");
         samsung3.setStatus(Phone.Status.AVAILABLE);
         samsung3.setCondition(Phone.Condition.EXCELLENT);
@@ -199,4 +217,50 @@ public class DataInitializer implements CommandLineRunner {
         System.out.println("Test phones created successfully!");
         System.out.println("Created 5 phones with different colors and specifications");
     }
-} 
+
+    private void createTestSimCards() {
+        // SIM Card 1 - Orange
+        SimCard sim1 = new SimCard();
+        sim1.setNumber("0612345678");
+        sim1.setIccid("8933101234567890123");
+        sim1.setStatus(SimCard.Status.AVAILABLE);
+        sim1.setCarrier("Orange");
+        sim1.setPlan("Pro 50GB");
+        sim1.setMonthlyFee(25.0);
+        sim1.setDataLimit("50GB");
+        sim1.setPin("1234");
+        sim1.setPuk("12345678");
+        sim1.setPoke("123");
+        simCardRepository.save(sim1);
+
+        // SIM Card 2 - SFR
+        SimCard sim2 = new SimCard();
+        sim2.setNumber("0623456789");
+        sim2.setIccid("8933109876543210987");
+        sim2.setStatus(SimCard.Status.AVAILABLE);
+        sim2.setCarrier("SFR");
+        sim2.setPlan("Business Unlimited");
+        sim2.setMonthlyFee(45.0);
+        sim2.setDataLimit("Unlimited");
+        sim2.setPin("5678");
+        sim2.setPuk("87654321");
+        sim2.setPoke("456");
+        simCardRepository.save(sim2);
+
+        // SIM Card 3 - Bouygues
+        SimCard sim3 = new SimCard();
+        sim3.setNumber("0634567890");
+        sim3.setIccid("8933100000000000001");
+        sim3.setStatus(SimCard.Status.AVAILABLE);
+        sim3.setCarrier("Bouygues");
+        sim3.setPlan("Standard 20GB");
+        sim3.setMonthlyFee(15.0);
+        sim3.setDataLimit("20GB");
+        sim3.setPin("0000");
+        sim3.setPuk("00000000");
+        sim3.setPoke("000");
+        simCardRepository.save(sim3);
+
+        System.out.println("Test SIM cards created successfully!");
+    }
+}

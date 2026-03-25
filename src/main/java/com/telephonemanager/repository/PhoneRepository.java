@@ -15,25 +15,27 @@ import java.util.Optional;
 
 @Repository
 public interface PhoneRepository extends JpaRepository<Phone, Long> {
-    Optional<Phone> findByImei(String imei);
+    Optional<Phone> findByImei1(String imei1);
 
     @Query("SELECT p FROM Phone p WHERE " +
-           "(:status IS NULL OR p.status = :status) AND " +
-           "(:brand IS NULL OR LOWER(p.brand) LIKE LOWER(CONCAT('%', :brand, '%'))) AND " +
-           "(:model IS NULL OR LOWER(p.model) LIKE LOWER(CONCAT('%', :model, '%')))")
+            "(:status IS NULL OR p.status = :status) AND " +
+            "(:brand IS NULL OR LOWER(p.brand) LIKE LOWER(CONCAT('%', :brand, '%'))) AND " +
+            "(:model IS NULL OR LOWER(p.model) LIKE LOWER(CONCAT('%', :model, '%')))")
     Page<Phone> findPhonesWithFilters(@Param("status") Status status,
-                                      @Param("brand") String brand,
-                                      @Param("model") String model,
-                                      Pageable pageable);
+            @Param("brand") String brand,
+            @Param("model") String model,
+            Pageable pageable);
 
     // Dashboard methods
     long countByAssignedToIsNotNull();
+
     long countByStatus(Status status);
-    
+
     @Query("SELECT p.brand, COUNT(p) FROM Phone p GROUP BY p.brand")
     List<Object[]> findBrandDistribution();
-    
+
     List<Phone> findByStatusAndAssignedDateBefore(Status status, LocalDate date);
-    
-    // Department-based queries - will be implemented when relationships are established
-} 
+
+    // Department-based queries - will be implemented when relationships are
+    // established
+}

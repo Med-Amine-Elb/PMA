@@ -57,18 +57,19 @@ public class UserDashboardController {
                 Optional<Attribution> latestPhoneAttr = activeAttributions.stream()
                         .filter(a -> a.getPhone() != null)
                         .max(Comparator.comparing(Attribution::getAssignmentDate));
-                
+
                 Optional<Attribution> latestSimAttr = activeAttributions.stream()
                         .filter(a -> a.getSimCard() != null)
                         .max(Comparator.comparing(Attribution::getAssignmentDate));
-                
+
                 if (latestSimAttr.isPresent()) {
                     simMap = buildSimMap(latestSimAttr.get().getSimCard(), latestSimAttr.get().getAssignmentDate());
                     phoneNumber = latestSimAttr.get().getSimCard().getNumber();
                 }
-                
+
                 if (latestPhoneAttr.isPresent()) {
-                    phoneMap = buildPhoneMap(latestPhoneAttr.get().getPhone(), latestPhoneAttr.get().getAssignmentDate());
+                    phoneMap = buildPhoneMap(latestPhoneAttr.get().getPhone(),
+                            latestPhoneAttr.get().getAssignmentDate());
                     // Add phone number from SIM if available
                     if (phoneMap != null && phoneNumber != null) {
                         phoneMap.put("phoneNumber", phoneNumber);
@@ -78,8 +79,7 @@ public class UserDashboardController {
 
             var page = requestRepository.findByUserId(
                     user.getId(),
-                    PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "createdAt"))
-            );
+                    PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "createdAt")));
 
             List<Map<String, Object>> requests = new ArrayList<>();
             page.getContent().forEach(r -> requests.add(buildRequestMap(r)));
@@ -99,8 +99,7 @@ public class UserDashboardController {
             response.put("success", false);
             response.put("error", Map.of(
                     "code", "DASHBOARD_ERROR",
-                    "message", e.getMessage()
-            ));
+                    "message", e.getMessage()));
             return ResponseEntity.badRequest().body(response);
         }
     }
@@ -124,12 +123,14 @@ public class UserDashboardController {
     }
 
     private Map<String, Object> buildPhoneMap(Phone phone, LocalDate assignedDate) {
-        if (phone == null) return null;
+        if (phone == null)
+            return null;
         Map<String, Object> map = new HashMap<>();
         map.put("model", phone.getModel());
         map.put("brand", phone.getBrand());
         map.put("serialNumber", phone.getSerialNumber());
-        map.put("imei", phone.getImei());
+        map.put("imei1", phone.getImei1());
+        map.put("imei2", phone.getImei2());
         map.put("color", phone.getColor());
         map.put("storage", phone.getStorage());
         map.put("condition", phone.getCondition() != null ? phone.getCondition().name() : null);
@@ -139,9 +140,9 @@ public class UserDashboardController {
         map.put("price", phone.getPrice());
         // These would typically come from a device monitoring service or MDM
         // For now, providing realistic default values
-        map.put("batteryHealth", 85 + (int)(Math.random() * 15)); // Random between 85-100%
-        map.put("storageUsed", 35 + (int)(Math.random() * 30)); // Random between 35-65%
-        map.put("lastSync", java.time.LocalDateTime.now().minusHours(1 + (int)(Math.random() * 24)).toString());
+        map.put("batteryHealth", 85 + (int) (Math.random() * 15)); // Random between 85-100%
+        map.put("storageUsed", 35 + (int) (Math.random() * 30)); // Random between 35-65%
+        map.put("lastSync", java.time.LocalDateTime.now().minusHours(1 + (int) (Math.random() * 24)).toString());
         map.put("osVersion", "iOS 17.1.2"); // Default iOS version
         map.put("phoneNumber", null); // Would come from SIM card assignment
         // Calculate warranty expiry (2 years from purchase date)
@@ -154,7 +155,8 @@ public class UserDashboardController {
     }
 
     private Map<String, Object> buildSimMap(SimCard sim, LocalDate assignedDate) {
-        if (sim == null) return null;
+        if (sim == null)
+            return null;
         Map<String, Object> map = new HashMap<>();
         map.put("number", sim.getNumber());
         map.put("iccid", sim.getIccid());
@@ -177,7 +179,8 @@ public class UserDashboardController {
     }
 
     private String mapRequestType(Request.Type type) {
-        if (type == null) return null;
+        if (type == null)
+            return null;
         return switch (type) {
             case PROBLEM -> "Problème";
             case REPLACEMENT -> "Remplacement";
@@ -186,4 +189,3 @@ public class UserDashboardController {
         };
     }
 }
-

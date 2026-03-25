@@ -14,6 +14,8 @@ public class AttributionDto {
     private Long phoneId;
     private String phoneModel;
     private String phoneBrand;
+    private String phoneImei1;
+    private String phoneImei2;
     private Long simCardId;
     private String simCardNumber;
     private Long assignedById;
@@ -28,25 +30,28 @@ public class AttributionDto {
     private LocalDateTime updatedAt;
 
     // Constructors
-    public AttributionDto() {}
+    public AttributionDto() {
+    }
 
     public AttributionDto(Attribution attribution) {
         this.id = attribution.getId();
         this.userId = attribution.getUser().getId();
         this.userName = attribution.getUser().getName();
         this.userEmail = attribution.getUser().getEmail();
-        
+
         if (attribution.getPhone() != null) {
             this.phoneId = attribution.getPhone().getId();
             this.phoneModel = attribution.getPhone().getModel();
             this.phoneBrand = attribution.getPhone().getBrand();
+            this.phoneImei1 = attribution.getPhone().getImei1();
+            this.phoneImei2 = attribution.getPhone().getImei2();
         }
-        
+
         if (attribution.getSimCard() != null) {
             this.simCardId = attribution.getSimCard().getId();
             this.simCardNumber = attribution.getSimCard().getNumber();
         }
-        
+
         this.assignedById = attribution.getAssignedBy().getId();
         this.assignedByName = attribution.getAssignedBy().getName();
         if (attribution.getReturnedBy() != null) {
@@ -116,6 +121,22 @@ public class AttributionDto {
 
     public void setPhoneBrand(String phoneBrand) {
         this.phoneBrand = phoneBrand;
+    }
+
+    public String getPhoneImei1() {
+        return phoneImei1;
+    }
+
+    public void setPhoneImei1(String phoneImei1) {
+        this.phoneImei1 = phoneImei1;
+    }
+
+    public String getPhoneImei2() {
+        return phoneImei2;
+    }
+
+    public void setPhoneImei2(String phoneImei2) {
+        this.phoneImei2 = phoneImei2;
     }
 
     public Long getSimCardId() {
@@ -197,4 +218,4 @@ public class AttributionDto {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-} 
+}

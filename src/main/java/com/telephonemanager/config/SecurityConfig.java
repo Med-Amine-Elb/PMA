@@ -32,38 +32,39 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         System.out.println("=== SECURITY CONFIG: Building filter chain ===");
-        
+
         http
-            .cors().configurationSource(corsConfigurationSource())
-            .and()
-            .csrf().disable()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authorizeHttpRequests()
-            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            .requestMatchers("/auth/login").permitAll()
-            .requestMatchers(
-                "/swagger-ui.html",
-                "/swagger-ui/**",
-                "/v3/api-docs",
-                "/v3/api-docs/**"
-            ).permitAll()
-            .requestMatchers("/h2-console/**").permitAll()
-            .requestMatchers("/api/ws/**").permitAll()
-            .requestMatchers("/api/test/**").permitAll()
-            .requestMatchers("/api/simple-test/**").permitAll()
-            .requestMatchers("/users/**").authenticated()
-            .requestMatchers("/simcards/**").authenticated()
-            .requestMatchers("/phones/**").authenticated()
-            .requestMatchers("/notifications/**").authenticated()
-            .requestMatchers("/chat/**").authenticated()
-            .anyRequest().authenticated()
-            .and()
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-        
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers("/auth/login").permitAll()
+                .requestMatchers(
+                        "/swagger-ui.html",
+                        "/swagger-ui/**",
+                        "/v3/api-docs",
+                        "/v3/api-docs/**")
+                .permitAll()
+                .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/api/ws/**").permitAll()
+                .requestMatchers("/api/test/**").permitAll()
+                .requestMatchers("/api/simple-test/**").permitAll()
+                .requestMatchers("/error").permitAll()
+                .requestMatchers("/users/**").authenticated()
+                .requestMatchers("/simcards/**").authenticated()
+                .requestMatchers("/phones/**").authenticated()
+                .requestMatchers("/notifications/**").authenticated()
+                .requestMatchers("/chat/**").authenticated()
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
         System.out.println("=== SECURITY CONFIG: Filter chain built successfully ===");
         System.out.println("Permitted paths: /auth/login, /api/ws/**, /api/test/**, /api/simple-test/**");
-        
+
         return http.build();
     }
 
@@ -71,16 +72,15 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(Arrays.asList(
-            "http://localhost:3000",
-            "http://localhost:3001", 
-            "http://127.0.0.1:3000",
-            "http://127.0.0.1:3001"
-        ));
+                "http://localhost:3000",
+                "http://localhost:3001",
+                "http://127.0.0.1:3000",
+                "http://127.0.0.1:3001"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
-        
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
@@ -95,4 +95,4 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-} 
+}
