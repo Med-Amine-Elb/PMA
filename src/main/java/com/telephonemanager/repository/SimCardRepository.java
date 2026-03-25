@@ -16,21 +16,28 @@ import java.util.Optional;
 @Repository
 public interface SimCardRepository extends JpaRepository<SimCard, Long> {
     Optional<SimCard> findByIccid(String iccid);
+
     Optional<SimCard> findByPuk(String puk);
 
     @Query("SELECT s FROM SimCard s WHERE " +
-           "(:status IS NULL OR s.status = :status) AND " +
-           "(:number IS NULL OR s.number LIKE CONCAT('%', :number, '%')) AND " +
-           "(:iccid IS NULL OR s.iccid LIKE CONCAT('%', :iccid, '%'))")
+            "(:status IS NULL OR s.status = :status) AND " +
+            "(:number IS NULL OR s.number LIKE CONCAT('%', :number, '%')) AND " +
+            "(:iccid IS NULL OR s.iccid LIKE CONCAT('%', :iccid, '%'))")
     Page<SimCard> findSimCardsWithFilters(@Param("status") Status status,
-                                          @Param("number") String number,
-                                          @Param("iccid") String iccid,
-                                          Pageable pageable);
+            @Param("number") String number,
+            @Param("iccid") String iccid,
+            Pageable pageable);
 
     // Dashboard methods
     long countByAssignedToIsNotNull();
+
     long countByStatus(Status status);
+
     List<SimCard> findByStatusAndAssignedDateBefore(Status status, LocalDate date);
-    
-    // Department-based queries - will be implemented when relationships are established
-} 
+
+    @Query("SELECT s.carrier, COUNT(s) FROM SimCard s GROUP BY s.carrier")
+    List<Object[]> findCarrierDistribution();
+
+    // Department-based queries - will be implemented when relationships are
+    // established
+}
